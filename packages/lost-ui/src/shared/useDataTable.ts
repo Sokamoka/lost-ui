@@ -13,7 +13,7 @@ import {
 } from 'ramda'
 import { SortOrders, useSort } from './useSort'
 import { usePagination } from './usePagination'
-import type { SortObject } from './useSort'
+import type { OrdersObject, SortObject } from './useSort'
 
 export interface UseDataTableOptions {
   columns: MaybeRef<ColumnsModel>
@@ -34,7 +34,7 @@ export interface ColumnModel {
   headerData: { [key: string]: any }
   cellClass?: string
   rowClass?: string
-  sortOrders?: SortObject
+  sortOrders?: OrdersObject[]
 }
 
 export interface ColumnsModel {

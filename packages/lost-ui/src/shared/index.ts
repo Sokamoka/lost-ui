@@ -4,5 +4,5 @@ export {
   type UseDataTable,
   type ConvertedColumnModel,
 } from './useDataTable'
-export { useSort } from './useSort'
+export { useSort, SortOrders, type OrdersObject, type SortObject } from './useSort'
 export { usePagination } from './usePagination'

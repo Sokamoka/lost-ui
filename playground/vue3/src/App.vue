@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { type ColumnsModel, useDataTable } from 'lost-ui'
+import { SortOrders, useDataTable } from 'lost-ui'
+import type { ColumnsModel, SortObject } from 'lost-ui'
 import {
   PaginationEllipsis,
   PaginationList,
@@ -60,7 +61,7 @@ const columns: ColumnsModel = {
       tooltip: 'E-mail',
     },
     cellClass: 'text-left',
-    sortOrders: [{ target: 'email', direction: 'descend' }],
+    sortOrders: [{ target: 'email', direction: SortOrders.SORT_STATE_DESCEND }],
   },
   amount: {
     title: 'Amount',
@@ -69,26 +70,28 @@ const columns: ColumnsModel = {
       tooltip: 'Unique User Name',
     },
     cellClass: 'text-right font-bold',
-    sortOrders: [{ target: 'amount', direction: 'descend' }],
+    sortOrders: [{ target: 'amount', direction: SortOrders.SORT_STATE_DESCEND }],
   },
 }
 
 const itemPerPage = ref(0)
 
-const initialSort = {
+const initialSort: SortObject = {
   sortTarget: 'amount',
-  orders: [{ target: 'amount', direction: 'descend' }],
+  orders: [{ target: 'amount', direction: SortOrders.SORT_STATE_DESCEND }],
 }
 
 const { columnModel, rowModel, page } = useDataTable({ columns, data, limit: itemPerPage, initialSort })
 </script>
 
 <template>
-  <DataTable :column-model="columnModel" :row-model="rowModel">
-    <template #cell-email="{ row }">
-      <a :href="`mailto:${row.email}`">{{ row.email }}</a>
-    </template>
-  </DataTable>
+  <div class="bg-white">
+    <DataTable :column-model="columnModel" :row-model="rowModel">
+      <template #cell-email="{ row }">
+        <a :href="`mailto:${row.email}`">{{ row.email }}</a>
+      </template>
+    </DataTable>
+  </div>
 
   <PaginationRoot
     v-model:page="page"
