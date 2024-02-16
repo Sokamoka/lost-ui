@@ -1,21 +1,40 @@
 {
   "name": "lost-ui",
-  "private": true,
-  "version": "0.0.0",
   "type": "module",
+  "version": "0.0.0",
+  "private": true,
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    }
+  },
+  "main": "./dist/index.umd.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "./LICENSE",
+    "./dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "vue": "^3.4.15"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^2.6.4",
     "@types/ramda": "^0.29.10",
     "@vitejs/plugin-vue": "^5.0.3",
     "@vueuse/core": "^10.7.2",
     "@xstate/fsm": "^2.1.0",
+    "eslint": "^8.56.0",
     "ramda": "^0.29.1",
     "typescript": "^5.2.2",
     "vite": "^5.1.0",
