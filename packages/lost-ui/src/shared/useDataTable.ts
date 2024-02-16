@@ -1,15 +1,15 @@
 import { computed, ref, unref } from 'vue'
 import type { ComputedRef, MaybeRef, Ref } from 'vue'
 import {
-  // always,
-  // ascend,
-  // compose,
-  // descend,
-  // equals,
-  // ifElse,
+  always,
+  ascend,
+  compose,
+  descend,
+  equals,
+  ifElse,
   isEmpty,
-  // prop,
-  // sortWith,
+  prop,
+  sortWith,
 } from 'ramda'
 import { SortOrders, useSort } from './useSort'
 import { usePagination } from './usePagination'
@@ -108,10 +108,10 @@ export function useDataTable(options: UseDataTableOptions): UseDataTable {
       return unref(data)
     if (sort.orders[0].direction === SortOrders.SORT_STATE_ORIGINAL)
       return unref(data)
-    // const sortDirection = ifElse(equals(SortOrders.SORT_STATE_ASCEND), always(ascend), always(descend))
-    // const mm = sort.orders.map(s => compose(sortDirection(s.direction), prop)(s.target))
-    // return sortWith(mm)(unref(data))
-    return unref(data)
+    const sortDirection = ifElse(equals(SortOrders.SORT_STATE_ASCEND), always(ascend), always(descend))
+    const mm = sort.orders.map(s => compose(sortDirection(s.direction), prop)(s.target))
+    return sortWith(mm)(unref(data))
+    // return unref(data)
   })
 
   const rowModel = computed(() => {

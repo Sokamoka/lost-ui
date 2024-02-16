@@ -85,7 +85,7 @@ const { columnModel, rowModel, page } = useDataTable({ columns, data, limit: ite
 </script>
 
 <template>
-  <div class="bg-white">
+  <div class="bg-white mb-5 rounded-xl overflow-clip">
     <DataTable :column-model="columnModel" :row-model="rowModel">
       <template #cell-email="{ row }">
         <a :href="`mailto:${row.email}`">{{ row.email }}</a>
