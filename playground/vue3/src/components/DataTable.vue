@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import {
-  type ConvertedColumnModel,
   Table,
-  TableData,
+  TableCell,
   TableHeader,
   TableRow,
 } from 'lost-ui'
+import type { ConvertedColumnModel } from 'lost-ui'
 
 export interface Props {
   columnModel: ConvertedColumnModel[]
@@ -41,7 +41,7 @@ const props = withDefaults(defineProps<Props>(), {
       </TableHeader>
     </TableRow>
     <TableRow v-for="row in props.rowModel" :key="row.id">
-      <TableData
+      <TableCell
         v-for="column in props.columnModel"
         :key="column.key"
         :class="[column.cell.cellClass, { 'bg-indigo-900': column.cell.isActive }]"
@@ -49,7 +49,7 @@ const props = withDefaults(defineProps<Props>(), {
         <slot :name="`cell-${column.prop}`" :column="column" :row="row">
           {{ row[column.prop] }}
         </slot>
-      </TableData>
+      </TableCell>
     </TableRow>
   </Table>
 </template>

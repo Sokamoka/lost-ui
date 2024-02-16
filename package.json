@@ -10,6 +10,10 @@
     "type": "git",
     "url": "git+https://github.com/Sokamoka/lost-ui.git"
   },
+  "workspaces": [
+    "packages/*",
+    "playground/**"
+  ],
   "author": "",
   "license": "MIT",
   "bugs": {
