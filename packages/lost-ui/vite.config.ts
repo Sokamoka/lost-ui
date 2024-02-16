@@ -12,7 +12,7 @@ export default defineConfig({
   })],
   build: {
     lib: {
-      name: 'loat-ui',
+      name: 'lost-ui',
       fileName: 'index',
       entry: resolve(__dirname, 'src/index.ts'),
     },

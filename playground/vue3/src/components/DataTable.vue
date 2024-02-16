@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   Table,
+  TableBody,
   TableCell,
   TableHeader,
   TableRow,
@@ -40,16 +41,18 @@ const props = withDefaults(defineProps<Props>(), {
         <span v-if="column.header.isSortable && !column.header.isActive" class="i-mdi-sort inline-block opacity-50" />
       </TableHeader>
     </TableRow>
-    <TableRow v-for="row in props.rowModel" :key="row.id">
-      <TableCell
-        v-for="column in props.columnModel"
-        :key="column.key"
-        :class="[column.cell.cellClass, { 'bg-indigo-900': column.cell.isActive }]"
-      >
-        <slot :name="`cell-${column.prop}`" :column="column" :row="row">
-          {{ row[column.prop] }}
-        </slot>
-      </TableCell>
-    </TableRow>
+    <TableBody>
+      <TableRow v-for="row in props.rowModel" :key="row.id">
+        <TableCell
+          v-for="column in props.columnModel"
+          :key="column.key"
+          :class="[column.cell.cellClass, { 'bg-indigo-900': column.cell.isActive }]"
+        >
+          <slot :name="`cell-${column.prop}`" :column="column" :row="row">
+            {{ row[column.prop] }}
+          </slot>
+        </TableCell>
+      </TableRow>
+    </TableBody>
   </Table>
 </template>
