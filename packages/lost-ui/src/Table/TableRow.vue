@@ -1,5 +1,14 @@
+<script lang="ts" setup>
+import type { HTMLAttributes } from 'vue'
+import { cm } from '@/utils'
+
+const props = defineProps<{
+  class?: HTMLAttributes['class']
+}>()
+</script>
+
 <template>
-  <tr>
+  <tr :class="cm('border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted', props.class)">
     <slot />
   </tr>
 </template>
