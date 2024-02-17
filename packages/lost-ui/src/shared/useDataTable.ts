@@ -1,19 +1,10 @@
 import { computed, ref, unref } from 'vue'
 import type { ComputedRef, MaybeRef, Ref } from 'vue'
-import {
-  always,
-  ascend,
-  compose,
-  descend,
-  equals,
-  ifElse,
-  isEmpty,
-  prop,
-  sortWith,
-} from 'ramda'
-import { SortOrders, useSort } from './useSort'
+import { isEmpty } from 'ramda'
+import { SortDirection, useSort } from './useSort'
 import { usePagination } from './usePagination'
 import type { OrdersObject, SortObject } from './useSort'
+import { sortBy } from '@/utils'
 
 export interface UseDataTableOptions {
   columns: MaybeRef<ColumnsModel>
@@ -53,7 +44,7 @@ export interface ConvertedColumnModel {
     isSortDesc: boolean
     isSortOrigi: boolean
     isSortable: boolean
-    direction: SortOrders
+    direction: SortDirection
     event: { click: () => void }
   }
   row: { rowClass: ColumnModel['rowClass'] }
@@ -85,9 +76,9 @@ export function useDataTable(options: UseDataTableOptions): UseDataTable {
           headerData,
           isActive,
           isSortable,
-          isSortAsc: isActive && sort.orders[0]?.direction === SortOrders.SORT_STATE_ASCEND,
-          isSortDesc: isActive && sort.orders[0]?.direction === SortOrders.SORT_STATE_DESCEND,
-          isSortOrigi: isActive && sort.orders[0]?.direction === SortOrders.SORT_STATE_ORIGINAL,
+          isSortAsc: isActive && sort.orders[0]?.direction === SortDirection.ASCEND,
+          isSortDesc: isActive && sort.orders[0]?.direction === SortDirection.DESCEND,
+          isSortOrigi: isActive && sort.orders[0]?.direction === SortDirection.ORIGINAL,
           direction: sort.orders[0]?.direction ?? null,
           event: { click: isSortable ? () => change({ sortTarget: key, orders: sortOrders } as SortObject) : undefined },
         },
@@ -106,12 +97,9 @@ export function useDataTable(options: UseDataTableOptions): UseDataTable {
   const sortedModel = computed(() => {
     if (!sort.sortTarget)
       return unref(data)
-    if (sort.orders[0].direction === SortOrders.SORT_STATE_ORIGINAL)
+    if (sort.orders[0].direction === SortDirection.ORIGINAL)
       return unref(data)
-    const sortDirection = ifElse(equals(SortOrders.SORT_STATE_ASCEND), always(ascend), always(descend))
-    const mm = sort.orders.map(s => compose(sortDirection(s.direction), prop)(s.target))
-    return sortWith(mm)(unref(data))
-    // return unref(data)
+    return sortBy(sort.orders, unref(data))
   })
 
   const rowModel = computed(() => {

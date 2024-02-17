@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SortOrders, useDataTable } from 'lost-ui'
+import { SortDirection, useDataTable } from 'lost-ui'
 import type { ColumnsModel, SortObject } from 'lost-ui'
 import {
   PaginationEllipsis,
@@ -15,30 +15,35 @@ import DataTable from './components/DataTable.vue'
 const data = [
   {
     id: 'm5gr84i9',
+    name: 'Ákos Stégner',
     amount: 316,
     status: 'success',
     email: 'ken99@yahoo.com',
   },
   {
     id: '3u1reuv4',
+    name: 'András Kovács',
     amount: 242,
     status: 'success',
     email: 'Abe45@gmail.com',
   },
   {
     id: 'derv1ws0',
+    name: 'Endre Tóth',
     amount: 837,
     status: 'processing',
     email: 'Monserrat44@gmail.com',
   },
   {
     id: '5kma53ae',
+    name: 'Éva Kovács',
     amount: 874,
     status: 'success',
     email: 'Silas22@gmail.com',
   },
   {
     id: 'bhqecj4p',
+    name: 'dr. Nagy István',
     amount: 721,
     status: 'failed',
     email: 'carmella@hotmail.com',
@@ -54,6 +59,15 @@ const columns: ColumnsModel = {
     },
     sortOrders: [],
   },
+  name: {
+    title: 'Name',
+    headerClass: 'text-left',
+    headerData: {
+      tooltip: 'Name',
+    },
+    cellClass: 'text-left',
+    sortOrders: [{ target: 'name', direction: SortDirection.ASCEND }],
+  },
   email: {
     title: 'E-mail',
     headerClass: 'text-left',
@@ -61,7 +75,7 @@ const columns: ColumnsModel = {
       tooltip: 'E-mail',
     },
     cellClass: 'text-left',
-    sortOrders: [{ target: 'email', direction: SortOrders.SORT_STATE_DESCEND }],
+    sortOrders: [{ target: 'email', direction: SortDirection.DESCEND }],
   },
   amount: {
     title: 'Amount',
@@ -70,7 +84,7 @@ const columns: ColumnsModel = {
       tooltip: 'Unique User Name',
     },
     cellClass: 'text-right font-bold',
-    sortOrders: [{ target: 'amount', direction: SortOrders.SORT_STATE_DESCEND }],
+    sortOrders: [{ target: 'amount', direction: SortDirection.DESCEND }],
   },
 }
 
@@ -78,7 +92,7 @@ const itemPerPage = ref(0)
 
 const initialSort: SortObject = {
   sortTarget: 'amount',
-  orders: [{ target: 'amount', direction: SortOrders.SORT_STATE_DESCEND }],
+  orders: [{ target: 'amount', direction: SortDirection.DESCEND }],
 }
 
 const { columnModel, rowModel, page } = useDataTable({ columns, data, limit: itemPerPage, initialSort })

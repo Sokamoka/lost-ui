@@ -1,15 +1,15 @@
 import { reactive } from 'vue'
 import { createMachine } from '@xstate/fsm'
 
-export enum SortOrders {
-  SORT_STATE_ASCEND = 'ascend',
-  SORT_STATE_DESCEND = 'descend',
-  SORT_STATE_ORIGINAL = 'original',
+export enum SortDirection {
+  ASCEND = 'ascend',
+  DESCEND = 'descend',
+  ORIGINAL = 'original',
 }
 
 export interface OrdersObject {
   target: string
-  direction: SortOrders
+  direction: SortDirection
 }
 
 export interface SortObject {
@@ -19,24 +19,24 @@ export interface SortObject {
 
 const sortMachine = createMachine({
   id: 'sort',
-  initial: SortOrders.SORT_STATE_ORIGINAL,
+  initial: SortDirection.ORIGINAL,
   states: {
-    [SortOrders.SORT_STATE_ORIGINAL]: {
+    [SortDirection.ORIGINAL]: {
       on: {
-        DIRECTION1: SortOrders.SORT_STATE_DESCEND,
-        DIRECTION2: SortOrders.SORT_STATE_ASCEND,
+        DIRECTION1: SortDirection.DESCEND,
+        DIRECTION2: SortDirection.ASCEND,
       },
     },
-    [SortOrders.SORT_STATE_DESCEND]: {
+    [SortDirection.DESCEND]: {
       on: {
-        DIRECTION1: SortOrders.SORT_STATE_ASCEND,
-        DIRECTION2: SortOrders.SORT_STATE_ORIGINAL,
+        DIRECTION1: SortDirection.ASCEND,
+        DIRECTION2: SortDirection.ORIGINAL,
       },
     },
-    [SortOrders.SORT_STATE_ASCEND]: {
+    [SortDirection.ASCEND]: {
       on: {
-        DIRECTION1: SortOrders.SORT_STATE_ORIGINAL,
-        DIRECTION2: SortOrders.SORT_STATE_DESCEND,
+        DIRECTION1: SortDirection.ORIGINAL,
+        DIRECTION2: SortDirection.DESCEND,
       },
     },
   },
@@ -73,6 +73,6 @@ export function useSort(sortParams: SortObject = {}) {
 
 function transitionOrderState(originalSortState: string, sortState: string) {
   const direction
-    = sortState === SortOrders.SORT_STATE_ASCEND ? 'DIRECTION2' : 'DIRECTION1'
+    = sortState === SortDirection.ASCEND ? 'DIRECTION2' : 'DIRECTION1'
   return sortMachine.transition(originalSortState, direction).value
 }

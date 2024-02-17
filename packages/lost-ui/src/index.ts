@@ -6,5 +6,5 @@ export {
   type UseDataTable,
   type ConvertedColumnModel,
 } from './shared'
-export { useSort, SortOrders, type OrdersObject, type SortObject } from './shared'
+export { useSort, SortDirection, type OrdersObject, type SortObject } from './shared'
 export { usePagination } from './shared'
