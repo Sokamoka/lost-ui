@@ -14,7 +14,7 @@ export default defineConfig({
   })],
   resolve: {
     alias: {
-      '@': resolve(projectRootDir, 'src'),
+      'lost-ui/utils': resolve(projectRootDir, 'src'),
     }
   },
   build: {

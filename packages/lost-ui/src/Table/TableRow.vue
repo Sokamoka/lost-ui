@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { HTMLAttributes } from 'vue'
-import { cm } from '@/utils'
+import { cm } from 'lost-ui/utils'
 
 const props = defineProps<{
   class?: HTMLAttributes['class']

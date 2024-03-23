@@ -4,7 +4,7 @@ import { isEmpty } from 'ramda'
 import { SortDirection, useSort } from './useSort'
 import { usePagination } from './usePagination'
 import type { OrdersObject, SortObject } from './useSort'
-import { sortBy } from '@/utils'
+import { sortBy } from 'lost-ui/utils'
 
 export interface UseDataTableOptions {
   columns: MaybeRef<ColumnsModel>
