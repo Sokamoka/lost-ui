@@ -13,6 +13,9 @@
       "lost-ui": ["../../packages/lost-ui/dist/index.d.ts"]
     },
     "resolveJsonModule": true,
+    "types": [
+      "unplugin-vue-router/client"
+    ],
     "allowImportingTsExtensions": true,
     /* Linting */
     "strict": true,
@@ -24,5 +27,5 @@
     "skipLibCheck": true
   },
   "references": [{ "path": "./tsconfig.node.json" }],
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "./typed-router.d.ts"]
 }
