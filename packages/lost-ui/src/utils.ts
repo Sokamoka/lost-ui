@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { SortDirection } from './shared/useSort'
-import type { OrdersObject } from './shared/useSort'
+import { SortDirection } from './composables/useSort'
+import type { OrdersObject } from './composables/useSort'
 
 export function cm(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
