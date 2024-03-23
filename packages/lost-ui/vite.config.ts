@@ -14,14 +14,14 @@ export default defineConfig({
   })],
   resolve: {
     alias: {
-      'lost-ui/utils': resolve(projectRootDir, 'src'),
+      'lost-ui/utils': resolve(projectRootDir, 'src/utils.ts'),
     }
   },
   build: {
     lib: {
       name: 'lost-ui',
-      fileName: 'index',
-      entry: resolve(__dirname, 'src/index.ts'),
+      // fileName: 'index',
+      entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/utils.ts')],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
