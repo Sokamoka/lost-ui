@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
-import { useFormValidation, useScrollToError } from "lost-ui";
+import { reactive, ref } from 'vue'
+import { useValidation } from 'lost-ui'
 import {
   Card,
   CardContent,
@@ -8,50 +8,53 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+
 // import Switch from "@/components/ui/switch/Switch.vue";
-import { useToast } from "@/components/ui/toast/use-toast";
+import { useToast } from '@/components/ui/toast/use-toast'
 
-const formElement = ref<HTMLFormElement | null>(null);
+const formElement = ref<HTMLFormElement | null>(null)
 
-const { toast } = useToast();
+const { toast } = useToast()
 
 const form = reactive({
-  name: "",
-  email: "",
-  userName: "",
-  framework: "",
+  name: '',
+  email: '',
+  userName: '',
+  framework: '',
   isFrameworkRequired: false,
   address: {
-    street: "",
-    city: "",
+    street: '',
+    city: '',
   },
-});
+})
 
-const { errors, hasError, onUpdate, getErrorMessage, reset, validate } =
-  useFormValidation(formElement);
+const { errors, hasError, onUpdate, getErrorMessage, reset, validate }
+  = useValidation(formElement)
 
-const scrollTo = useScrollToError({ offset: 40 });
+// const scrollTo = useScrollToError({ offset: 40 });
 
-const onSubmit = async () => {
-  const valid = await validate();
-  if (!valid) return scrollTo();
+async function onSubmit() {
+  const valid = await validate()
+  // if (!valid) return scrollTo();
+  if (!valid)
+    return
   toast({
-    title: "Register Success",
-  });
-};
+    title: 'Register Success',
+  })
+}
 
-const onReset = () => {
-  formElement.value?.reset();
-  reset();
-};
+function onReset() {
+  formElement.value?.reset()
+  reset()
+}
 </script>
 
 <template>
-  <form ref="formElement" @submit.prevent="onSubmit" novalidate>
+  <form ref="formElement" novalidate @submit.prevent="onSubmit">
     <Card class="w-[350px] mx-auto">
       <CardHeader>
         <CardTitle>Registration</CardTitle>
@@ -60,13 +63,11 @@ const onReset = () => {
       <CardContent>
         <div class="grid items-center w-full gap-4">
           <section class="flex flex-col space-y-1.5 group">
-            <Label for="name" :class="{ 'text-red-500': hasError('name') }"
-              >Name</Label
-            >
+            <Label for="name" :class="{ 'text-red-500': hasError('name') }">Name</Label>
             <Input
               id="name"
-              name="name"
               v-model="form.name"
+              name="name"
               placeholder="Name of your project"
               :class="{
                 'border-red-500 bg-red-50 text-red-500': hasError('name'),
@@ -83,13 +84,11 @@ const onReset = () => {
           </section>
 
           <section class="flex flex-col space-y-1.5">
-            <Label for="email" :class="{ 'text-red-500 ': hasError('email') }"
-              >E-mail</Label
-            >
+            <Label for="email" :class="{ 'text-red-500 ': hasError('email') }">E-mail</Label>
             <Input
               id="email"
-              name="email"
               v-model="form.email"
+              name="email"
               placeholder="E-mail"
               type="email"
               :class="{
@@ -167,17 +166,18 @@ const onReset = () => {
             </div>
           </section> -->
 
-          <h2 class="text-md font-bold">Address</h2>
+          <h2 class="text-md font-bold">
+            Address
+          </h2>
           <section class="flex flex-col space-y-1.5">
             <Label
               for="street"
               :class="{ 'text-red-500 ': hasError('address.street') }"
-              >Street</Label
-            >
+            >Street</Label>
             <Input
               id="street"
-              name="address.street"
               v-model="form.address.street"
+              name="address.street"
               placeholder="Street"
               :class="{
                 'border-red-500 bg-red-50': hasError('address.street'),
@@ -195,12 +195,11 @@ const onReset = () => {
             <Label
               for="city"
               :class="{ 'text-red-500 ': hasError('address.city') }"
-              >City</Label
-            >
+            >City</Label>
             <Input
               id="city"
-              name="address.city"
               v-model="form.address.city"
+              name="address.city"
               placeholder="City"
               :class="{ 'border-red-500 bg-red-50': hasError('address.city') }"
               :aria-invalid="hasError('address.city')"
@@ -214,8 +213,12 @@ const onReset = () => {
         </div>
       </CardContent>
       <CardFooter class="flex justify-between px-6 pb-6">
-        <Button type="button" variant="outline" @click="onReset"> Reset </Button>
-        <Button type="submit">Register</Button>
+        <Button type="button" variant="outline" @click="onReset">
+          Reset
+        </Button>
+        <Button type="submit">
+          Register
+        </Button>
       </CardFooter>
     </Card>
   </form>

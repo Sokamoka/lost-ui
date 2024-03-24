@@ -15,7 +15,7 @@ export default defineConfig({
   resolve: {
     alias: {
       'lost-ui/utils': resolve(projectRootDir, 'src/utils.ts'),
-    }
+    },
   },
   build: {
     lib: {
