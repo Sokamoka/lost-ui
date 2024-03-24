@@ -56,6 +56,9 @@ importers:
 
   playground/vue3:
     dependencies:
+      '@vueuse/core':
+        specifier: ^10.7.2
+        version: 10.7.2(vue@3.4.19)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -64,7 +67,7 @@ importers:
         version: 2.1.0
       lost-ui:
         specifier: workspace:^
-        version: link:../..
+        version: link:../../packages/lost-ui
       lucide-vue-next:
         specifier: ^0.363.0
         version: 0.363.0(vue@3.4.19)
@@ -1288,7 +1291,6 @@ packages:
 
   /@types/web-bluetooth@0.0.20:
     resolution: {integrity: sha512-g9gZnnXVq7gM7v3tJCWV/qw7w+KeOlSHAhgF9RytFyifW6AF61hdT2ucrYhPq9hLs5JIryeupHV3qGk95dH9ow==}
-    dev: true
 
   /@typescript-eslint/eslint-plugin@6.21.0(@typescript-eslint/parser@6.21.0)(eslint@8.56.0)(typescript@5.3.3):
     resolution: {integrity: sha512-oy9+hTPCUFpngkEZUSzbf9MxI65wbKFoQYsgPdILTfbUldp5ovUuphZVe4i30emU9M/kP+T64Di0mxl7dSw3MA==}
@@ -1788,11 +1790,9 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
 
   /@vueuse/metadata@10.7.2:
     resolution: {integrity: sha512-kCWPb4J2KGrwLtn1eJwaJD742u1k5h6v/St5wFe8Quih90+k2a0JP8BS4Zp34XUuJqS2AxFYMb1wjUL8HfhWsQ==}
-    dev: true
 
   /@vueuse/shared@10.7.2(vue@3.4.19):
     resolution: {integrity: sha512-qFbXoxS44pi2FkgFjPvF4h7c9oMDutpyBdcJdMYIMg9XyXli2meFMuaKn+UMgsClo//Th6+beeCgqweT/79BVA==}
@@ -1801,7 +1801,6 @@ packages:
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
-    dev: true
 
   /@xstate/fsm@2.1.0:
     resolution: {integrity: sha512-oJlc0iD0qZvAM7If/KlyJyqUt7wVI8ocpsnlWzAPl97evguPbd+oJbRM9R4A1vYJffYH96+Bx44nLDE6qS8jQg==}
