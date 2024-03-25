@@ -1,5 +1,3 @@
-export * from './Table'
-
 export {
   useDataTable,
   type ColumnsModel,
