@@ -12,7 +12,7 @@
 
     "paths": {
       "@/*": ["./src/*"],
-      "lost-ui": ["../../packages/lost-ui/dist/index.d.ts"]
+      "lost-ui": ["../../packages/lost-ui-utils/dist/index.d.ts"]
     },
     "resolveJsonModule": true,
     "types": [
