@@ -14,13 +14,12 @@ export default defineConfig({
   })],
   resolve: {
     alias: {
-      'lost-ui/utils': resolve(projectRootDir, 'src/utils.ts'),
+      'lost-ui-utils/utils': resolve(projectRootDir, 'src/utils.ts'),
     },
   },
   build: {
     lib: {
-      name: 'lost-ui',
-      // fileName: 'index',
+      name: 'lost-ui-utils',
       entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/utils.ts')],
     },
     rollupOptions: {

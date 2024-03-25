@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ConvertedColumnModel } from 'lost-ui'
+import type { ConvertedColumnModel } from 'lost-ui-utils'
 import {
   Table,
   TableBody,

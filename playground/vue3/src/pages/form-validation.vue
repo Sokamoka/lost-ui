@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { useValidation } from 'lost-ui'
+import { useValidation } from 'lost-ui-utils'
 import {
   Card,
   CardContent,

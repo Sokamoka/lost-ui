@@ -22,8 +22,8 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      'lost-ui/utils': resolve(projectRootDir, '../../packages/lost-ui-utils/src/utils.ts'),
-      'lost-ui': resolve(projectRootDir, '../../packages/lost-ui-utils/src/index.ts'),
+      'lost-ui-utils/utils': resolve(projectRootDir, '../../packages/lost-ui-utils/src/utils.ts'),
+      'lost-ui-utils': resolve(projectRootDir, '../../packages/lost-ui-utils/src/index.ts'),
       '@': resolve(__dirname, './src'),
     },
   },

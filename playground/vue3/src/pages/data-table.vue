@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { SortDirection, useDataTable } from 'lost-ui'
-import type { ColumnsModel, SortObject } from 'lost-ui'
+import { SortDirection, useDataTable } from 'lost-ui-utils'
+import type { ColumnsModel, SortObject } from 'lost-ui-utils'
 import DataTable from '../components/DataTable.vue'
 import Pagination from '../components/Pagination.vue'
 import {

@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  packages/lost-ui:
+  packages/lost-ui-utils:
     dependencies:
       vue:
         specifier: ^3.4.15
@@ -71,9 +71,9 @@ importers:
       clsx:
         specifier: ^2.1.0
         version: 2.1.0
-      lost-ui:
+      lost-ui-utils:
         specifier: workspace:^
-        version: link:../../packages/lost-ui
+        version: link:../../packages/lost-ui-utils
       lucide-vue-next:
         specifier: ^0.363.0
         version: 0.363.0(vue@3.4.19)

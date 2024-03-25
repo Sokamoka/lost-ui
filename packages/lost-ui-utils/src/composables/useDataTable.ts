@@ -1,7 +1,7 @@
 import { computed, ref, unref } from 'vue'
 import type { ComputedRef, MaybeRef, Ref } from 'vue'
 import { isEmpty } from 'ramda'
-import { sortBy } from 'lost-ui/utils'
+import { sortBy } from 'lost-ui-utils/utils'
 import { SortDirection, useSort } from './useSort'
 import { usePagination } from './usePagination'
 import type { OrdersObject, SortObject } from './useSort'
