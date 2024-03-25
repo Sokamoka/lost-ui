@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <Table>
+  <Table class="mb-10">
     <TableHeader>
       <TableRow>
         <TableHead
