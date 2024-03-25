@@ -1,3 +1,5 @@
 <template>
-  <RouterView />
+  <div class="p-10">
+    <RouterView />
+  </div>
 </template>

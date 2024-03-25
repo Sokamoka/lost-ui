@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ConvertedColumnModel } from 'lost-ui'
 import {
   Table,
   TableBody,
@@ -6,8 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from 'lost-ui'
-import type { ConvertedColumnModel } from 'lost-ui'
+} from '@/components/ui/table'
 
 export interface Props {
   columnModel: ConvertedColumnModel[]
@@ -22,9 +22,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <Table>
-    <TableHead>
+    <TableHeader>
       <TableRow>
-        <TableHeader
+        <TableHead
           v-for="column in props.columnModel"
           :key="column.key"
           class="text-gray-900 border-b border-gray-200 border-b-solid text-xs font-bold" :class="[
@@ -41,15 +41,15 @@ const props = withDefaults(defineProps<Props>(), {
           <span v-if="column.header.isSortDesc" class="i-mdi-sort-descending inline-block" />
           <span v-if="column.header.isSortOrigi" class="i-mdi-sort inline-block" />
           <span v-if="column.header.isSortable && !column.header.isActive" class="i-mdi-sort inline-block opacity-50" />
-        </TableHeader>
+        </TableHead>
       </TableRow>
-    </TableHead>
+    </TableHeader>
     <TableBody>
       <TableRow v-for="row in props.rowModel" :key="row.id">
         <TableCell
           v-for="column in props.columnModel"
           :key="column.key"
-          class="text-indigo-700" :class="[column.cell.cellClass, { 'bg-indigo-50': column.cell.isActive }]"
+          :class="[column.cell.cellClass, { 'bg-indigo-50': column.cell.isActive }]"
         >
           <slot :name="`cell-${column.prop}`" :column="column" :row="row">
             {{ row[column.prop] }}

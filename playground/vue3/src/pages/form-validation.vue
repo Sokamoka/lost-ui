@@ -12,8 +12,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Button } from '@/components/ui/button'
-
-// import Switch from "@/components/ui/switch/Switch.vue";
 import { useToast } from '@/components/ui/toast/use-toast'
 
 const formElement = ref<HTMLFormElement | null>(null)
@@ -54,8 +52,8 @@ function onReset() {
 </script>
 
 <template>
-  <form ref="formElement" novalidate @submit.prevent="onSubmit">
-    <Card class="w-[350px] mx-auto">
+  <Card class="w-[350px] mx-auto">
+    <form ref="formElement" novalidate @submit.prevent="onSubmit">
       <CardHeader>
         <CardTitle>Registration</CardTitle>
         <CardDescription>Register user </CardDescription>
@@ -220,8 +218,8 @@ function onReset() {
           Register
         </Button>
       </CardFooter>
-    </Card>
-  </form>
+    </form>
+  </Card>
   <!-- <pre>{{ form }}</pre> -->
   <pre>{{ errors }}</pre>
 </template>
