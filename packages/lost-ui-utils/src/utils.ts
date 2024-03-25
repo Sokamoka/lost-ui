@@ -1,11 +1,5 @@
-import { type ClassValue, clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
 import { SortDirection } from './composables/useSort'
 import type { OrdersObject } from './composables/useSort'
-
-export function cm(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
 
 export function sortBy(targets: OrdersObject[], array: any[]) {
   const collator = new Intl.Collator('en')

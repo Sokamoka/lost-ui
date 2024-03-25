@@ -1,6 +1,6 @@
 import { computed, ref, unref } from 'vue'
 import type { ComputedRef, MaybeRef, Ref } from 'vue'
-import { isEmpty } from 'ramda'
+import { isEmpty } from 'lodash-es'
 import { sortBy } from 'lost-ui-utils/utils'
 import { SortDirection, useSort } from './useSort'
 import { usePagination } from './usePagination'
