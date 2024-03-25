@@ -2,9 +2,9 @@ import { computed, ref, unref } from 'vue'
 import type { ComputedRef, MaybeRef, Ref } from 'vue'
 import { isEmpty } from 'lodash-es'
 import { sortBy } from 'lost-ui-utils/utils'
-import { SortDirection, useSort } from './useSort'
-import { usePagination } from './usePagination'
-import type { OrdersObject, SortObject } from './useSort'
+import { SortDirection, useSort } from '../useSort'
+import { usePagination } from '../usePagination'
+import type { OrdersObject, SortObject } from '../useSort'
 
 export interface UseDataTableOptions {
   columns: MaybeRef<ColumnsModel>

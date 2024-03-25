@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:vue3": "pnpm run -C playground/vue3 dev"
+    "dev:vue3": "pnpm run -C playground/vue3 dev",
+    "build": "pnpm -r --filter='./packages/*' run build",
+    "release": "bumpp -r --all",
+    "publish:release": "pnpm run build && pnpm -r publish --access public"
   },
   "repository": {
     "type": "git",
@@ -19,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/Sokamoka/lost-ui/issues"
   },
-  "homepage": "https://github.com/Sokamoka/lost-ui#readme"
+  "homepage": "https://github.com/Sokamoka/lost-ui#readme",
+  "devDependencies": {
+    "bumpp": "^9.4.0"
+  }
 }
