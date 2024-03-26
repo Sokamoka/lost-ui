@@ -8,6 +8,11 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./components": {
+      "import": "./dist/components.js",
+      "require": "./dist/components.cjs",
+      "type": "./dist/components.d.ts"
+    },
     "./utils": {
       "import": "./dist/utils.js",
       "require": "./dist/utils.cjs",

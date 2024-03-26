@@ -20,7 +20,7 @@ export default defineConfig({
   build: {
     lib: {
       name: 'lost-ui-utils',
-      entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/utils.ts')],
+      entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/components.ts'), resolve(__dirname, 'src/utils.ts')],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
