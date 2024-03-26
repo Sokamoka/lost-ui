@@ -1,5 +1,7 @@
-import { reactive } from 'vue'
+import type { MaybeRefOrGetter } from 'vue'
+import { computed, reactive, toValue } from 'vue'
 import { createMachine } from '@xstate/fsm'
+import { sortBy } from '../../utils'
 
 export enum SortDirection {
   ASCEND = 'ascend',
@@ -42,12 +44,11 @@ const sortMachine = createMachine({
   },
 })
 
-export function useSort(sortParams: SortObject = {}) {
-  const { sortTarget = null, orders = [] } = sortParams
+export function useSort<T>(data: MaybeRefOrGetter<T[]>, initialSort: SortObject = {}) {
+  const { sortTarget = null, orders = [] } = initialSort
   const sort = reactive({ sortTarget, orders })
 
   const change = ({ sortTarget = null, orders = [] }: SortObject) => {
-    // console.log({ sortTarget, orders })
     if (sort.sortTarget !== sortTarget) {
       sort.sortTarget = sortTarget
       sort.orders = orders
@@ -65,7 +66,17 @@ export function useSort(sortParams: SortObject = {}) {
     sort.orders = nextOrders
   }
 
+  const state = computed(() => {
+    const _data = toValue(data)
+    if (!sort.sortTarget)
+      return _data
+    if (sort.orders[0].direction === SortDirection.ORIGINAL)
+      return _data
+    return sortBy(_data, sort.orders)
+  })
+
   return {
+    state,
     sort,
     change,
   }

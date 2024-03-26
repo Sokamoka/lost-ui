@@ -1,20 +1,31 @@
-import { toValue } from 'vue'
+import { shallowRef, toValue, watch } from 'vue'
 import { SortDirection } from '../useSort'
 import type { OrdersObject } from '../useSort'
 
-export function useSortBy<T extends OrdersObject>(targets: T[], data: any[]) {
+export function useSortBy<T extends OrdersObject>(data: any[], targets: T[]) {
+  const _data = shallowRef([])
   const collator = new Intl.Collator('en')
 
-  return toValue(data).slice().sort((a, b) => {
-    let comparison = 0
-    for (const { target, direction } of targets) {
-      const aValue = a[target]
-      const bValue = b[target]
+  function sort() {
+    return toValue(_data).slice().sort((a, b) => {
+      let comparison = 0
+      for (const { target, direction } of targets) {
+        const aValue = a[target]
+        const bValue = b[target]
 
-      comparison = collator.compare(aValue, bValue)
-      if (comparison !== 0)
-        return direction === SortDirection.ASCEND ? comparison : -comparison
-    }
-    return comparison
+        comparison = collator.compare(aValue, bValue)
+        if (comparison !== 0)
+          return direction === SortDirection.ASCEND ? comparison : -comparison
+      }
+      return comparison
+    })
+  }
+
+  watch(data, (data) => {
+    _data.value = data
   })
+
+  watch(targets, sort)
+
+  return _data
 }

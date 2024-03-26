@@ -1,7 +1,6 @@
 import { computed, unref } from 'vue'
 import type { ComputedRef, MaybeRef } from 'vue'
 import { isEmpty } from 'lodash-es'
-import { sortBy } from 'lost-ui-utils/utils'
 import { SortDirection, useSort } from '../useSort'
 import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
 import type { OrdersObject, SortObject } from '../useSort'
@@ -51,7 +50,13 @@ export interface ConvertedColumnModel {
 export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
   const { columns, data, initialSort, itemsPerPage = 0, defaultPage = 1, siblingCount = 2 } = options
 
-  const { sort, change } = useSort(initialSort)
+  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, initialSort)
+
+  const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(state, {
+    itemsPerPage,
+    defaultPage,
+    siblingCount,
+  })
 
   const columnModel = computed(() => {
     const rawColumns = unref(columns)
@@ -81,20 +86,6 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
         cell: { isActive, ...attrs },
       } as ConvertedColumnModel
     })
-  })
-
-  const sortedModel = computed(() => {
-    if (!sort.sortTarget)
-      return unref(data)
-    if (sort.orders[0].direction === SortDirection.ORIGINAL)
-      return unref(data)
-    return sortBy(sort.orders, unref(data))
-  })
-
-  const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(sortedModel, {
-    itemsPerPage,
-    defaultPage,
-    siblingCount,
   })
 
   return {

@@ -1,10 +1,10 @@
 import { SortDirection } from './composables/useSort'
 import type { OrdersObject } from './composables/useSort'
 
-export function sortBy(targets: OrdersObject[], array: any[]) {
+export function sortBy(data: any[], targets: OrdersObject[]) {
   const collator = new Intl.Collator('en')
 
-  return array.slice().sort((a, b) => {
+  return data.slice().sort((a, b) => {
     let comparison = 0
     for (const target of targets) {
       const aValue = a[target.target]
