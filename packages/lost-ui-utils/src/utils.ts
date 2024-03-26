@@ -1,8 +1,13 @@
 import { SortDirection } from './composables/useSort'
 import type { SortOrders } from './composables/useSort'
 
-export function sortBy(data: any[], targets: SortOrders[]) {
-  const collator = new Intl.Collator('en')
+export interface SortByOptions {
+  locale?: string
+}
+
+export function sortBy(data: any[], targets: SortOrders[], options: SortByOptions = {}) {
+  const { locale = 'en' } = options
+  const collator = new Intl.Collator(locale)
 
   return data.slice().sort((a, b) => {
     let comparison = 0
