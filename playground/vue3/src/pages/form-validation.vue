@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { useValidation } from 'lost-ui-utils'
+import { useShowPassword, useValidation } from 'lost-ui-utils'
+import { Eye } from 'lucide-vue-next'
 import {
   Card,
   CardContent,
@@ -16,19 +17,20 @@ import { useToast } from '@/components/ui/toast/use-toast'
 
 const formElement = ref<HTMLFormElement | null>(null)
 
-const { toast } = useToast()
-
 const form = reactive({
   name: '',
   email: '',
   userName: '',
-  framework: '',
-  isFrameworkRequired: false,
+  password: '',
   address: {
     street: '',
     city: '',
   },
 })
+
+const { toast } = useToast()
+
+const { type, toggle } = useShowPassword()
 
 const { errors, hasError, onUpdate, getErrorMessage, reset, validate }
   = useValidation(formElement)
@@ -101,68 +103,30 @@ function onReset() {
             </div>
           </section>
 
-          <!-- <section class="flex flex-col space-y-1.5">
-            <Label
-              for="user-name"
-              :class="{ 'text-red-500 ': hasError('userName') }"
-              >User Name</Label
-            >
-            <Input
-              id="user-name"
-              v-model="form.userName"
-              placeholder="User Name"
-              :class="{
-                'border-red-500 bg-red-50': hasError('userName'),
-              }"
-              :aria-invalid="hasError('userName')"
-            />
-            <div v-if="hasError('userName')" class="text-red-500 text-xs">
-              {{ getErrorMessage("userName") }}
-            </div>
-          </section> -->
-
-          <!-- <section class="flex items-center space-x-2">
-            <Switch
-              id="framework-required"
-              v-model:checked="form.isFrameworkRequired"
-              @update:checked="onUpdate"
-            >
-            </Switch>
-            <Label for="framework-required">Framework Requierd</Label>
-          </section> -->
-
-          <!-- <section class="flex flex-col space-y-1.5">
-            <Label
-              for="framework"
-              :class="{ 'text-red-500': hasError('framework') }"
-              >Framework</Label
-            >
-            <Select
-              name="framework"
-              v-model="form.framework"
-              :required="form.isFrameworkRequired"
-              @update:model-value="onUpdate"
-            >
-              <SelectTrigger
-                id="framework"
+          <section class="flex flex-col space-y-1.5">
+            <Label for="password" :class="{ 'text-red-500 ': hasError('password') }">Password</Label>
+            <div class="relative w-full max-w-sm items-center">
+              <Input
+                id="password"
+                v-model="form.password"
+                name="password"
+                placeholder="Password"
+                :type="type"
                 :class="{
-                  'border-red-500 bg-red-50': hasError('framework'),
+                  'border-red-500 bg-red-50 text-red-500': hasError('password'),
                 }"
-                :aria-invalid="hasError('framework')"
-              >
-                <SelectValue placeholder="Select" />
-              </SelectTrigger>
-              <SelectContent position="popper">
-                <SelectItem value="nuxt"> Nuxt.js </SelectItem>
-                <SelectItem value="next"> Next.js </SelectItem>
-                <SelectItem value="sveltekit"> SvelteKit </SelectItem>
-                <SelectItem value="astro"> Astro </SelectItem>
-              </SelectContent>
-            </Select>
-            <div v-if="hasError('framework')" class="text-red-500 text-xs">
-              {{ getErrorMessage("framework") }}
+                :aria-invalid="hasError('password')"
+                required
+                @input="onUpdate"
+              />
+              <span class="absolute end-0 inset-y-0 flex items-center justify-center px-2" @click="toggle()">
+                <Eye :class="[type === 'password' ? 'opacity-40' : 'opacity-100']" />
+              </span>
             </div>
-          </section> -->
+            <div v-if="hasError('password')" class="text-red-500 text-xs">
+              {{ getErrorMessage("password") }}
+            </div>
+          </section>
 
           <h2 class="text-md font-bold">
             Address
