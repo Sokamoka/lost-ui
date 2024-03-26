@@ -1,7 +1,7 @@
 export {
   useDataTable,
   type ColumnsModel,
-  type UseDataTable,
+  type UseDataTableReturn,
   type ConvertedColumnModel,
 } from './composables'
 export { useSort, SortDirection, type OrdersObject, type SortObject } from './composables'

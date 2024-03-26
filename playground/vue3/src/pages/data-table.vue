@@ -53,14 +53,14 @@ const columns: ColumnsModel = {
   },
 }
 
-const itemPerPage = ref(4)
+const itemsPerPage = ref(4)
 
 const initialSort: SortObject = {
   sortTarget: 'amount',
   orders: [{ target: 'amount', direction: SortDirection.DESCEND }],
 }
 
-const { columnModel, rowModel, page } = useDataTable({ columns, data, limit: itemPerPage, initialSort })
+const { columnModel, state, page } = useDataTable({ columns, data, itemsPerPage, initialSort })
 </script>
 
 <template>
@@ -70,13 +70,13 @@ const { columnModel, rowModel, page } = useDataTable({ columns, data, limit: ite
       <CardDescription>Registerd user list</CardDescription>
     </CardHeader>
     <CardContent>
-      <DataTable :column-model="columnModel" :row-model="rowModel">
+      <DataTable :column-model="columnModel" :row-model="state">
         <template #cell-email="{ row }">
           <a :href="`mailto:${row.email}`">{{ row.email }}</a>
         </template>
       </DataTable>
 
-      <Pagination v-model:page="page" :total="data.length" :items-per-page="itemPerPage" />
+      <Pagination v-model:page="page" :total="data.length" :items-per-page="itemsPerPage" />
     </CardContent>
   </Card>
 </template>

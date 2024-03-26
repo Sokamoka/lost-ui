@@ -1,22 +1,19 @@
-import { computed, ref, unref } from 'vue'
-import type { ComputedRef, MaybeRef, Ref } from 'vue'
+import { computed, unref } from 'vue'
+import type { ComputedRef, MaybeRef } from 'vue'
 import { isEmpty } from 'lodash-es'
 import { sortBy } from 'lost-ui-utils/utils'
 import { SortDirection, useSort } from '../useSort'
-import { usePagination } from '../usePagination'
+import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
 import type { OrdersObject, SortObject } from '../useSort'
 
-export interface UseDataTableOptions {
+export interface UseDataTableOptions<T = any> extends usePaginationOptions {
+  data: MaybeRef<T[]>
   columns: MaybeRef<ColumnsModel>
-  data: any[]
-  limit?: MaybeRef<number>
   initialSort?: SortObject
 }
 
-export interface UseDataTable {
+export interface UseDataTableReturn extends usePaginationReturn<Pick<UseDataTableOptions, 'data'>> {
   columnModel: ComputedRef<ConvertedColumnModel[]>
-  rowModel: ComputedRef<any[]>
-  page: Ref<number>
 }
 
 export interface ColumnModel {
@@ -51,10 +48,8 @@ export interface ConvertedColumnModel {
   cell: { isActive: boolean, cellClass: ColumnModel['cellClass'] }
 }
 
-export function useDataTable(options: UseDataTableOptions): UseDataTable {
-  const { columns, data, limit = 0, initialSort } = options
-
-  const page = ref(1)
+export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
+  const { columns, data, initialSort, itemsPerPage = 0, defaultPage = 1, siblingCount = 2 } = options
 
   const { sort, change } = useSort(initialSort)
 
@@ -88,12 +83,6 @@ export function useDataTable(options: UseDataTableOptions): UseDataTable {
     })
   })
 
-  const pagination = usePagination({
-    currentPage: page,
-    totalItems: unref(data).length,
-    update: p => (page.value = p),
-  })
-
   const sortedModel = computed(() => {
     if (!sort.sortTarget)
       return unref(data)
@@ -102,17 +91,14 @@ export function useDataTable(options: UseDataTableOptions): UseDataTable {
     return sortBy(sort.orders, unref(data))
   })
 
-  const rowModel = computed(() => {
-    if (!unref(limit))
-      return sortedModel.value
-    const startIndex = (page.value - 1) * unref(limit)
-    const endIndex = startIndex + unref(limit)
-    return sortedModel.value.slice(startIndex, endIndex)
+  const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(sortedModel, {
+    itemsPerPage,
+    defaultPage,
+    siblingCount,
   })
 
   return {
     ...pagination,
     columnModel,
-    rowModel,
   }
 }

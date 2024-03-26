@@ -1,72 +1,80 @@
+export interface PaymentData {
+  id: string
+  amount: number
+  status: string
+  name: string
+  email: string
+}
+
 export const PAYMENT_DATA = [
   {
-    id: 'm5gr84i9',
+    id: '0',
     amount: 316,
     status: 'success',
     name: 'Ken Adulo',
     email: 'ken99@yahoo.com',
   },
   {
-    id: '3u1reuv4',
+    id: '1',
     amount: 242,
     status: 'success',
     name: 'Abe Awerto',
     email: 'Abe45@gmail.com',
   },
   {
-    id: 'derv1ws0',
+    id: '2',
     amount: 837,
     status: 'processing',
     name: 'Mortem Monsert',
     email: 'Monserrat44@gmail.com',
   },
   {
-    id: '5kma53ae',
+    id: '3',
     amount: 874,
     status: 'success',
     name: 'Silas Arturo',
     email: 'Silas22@gmail.com',
   },
   {
-    id: 'bhqecj4p',
+    id: '4',
     amount: 721,
     status: 'failed',
     name: 'Caramella Gartara',
     email: 'carmella@hotmail.com',
   },
   {
-    id: 'm5gr84i92',
+    id: '5',
     amount: 316,
     status: 'success',
     name: 'Ken Adulo',
     email: 'ken99@yahoo.com',
   },
   {
-    id: '3u1reuv42',
+    id: '6',
     amount: 242,
     status: 'success',
     name: 'Abe Awerto',
     email: 'Abe45@gmail.com',
   },
   {
-    id: 'derv1ws02',
+    id: '7',
     amount: 837,
     status: 'processing',
     name: 'Mortem Monsert',
     email: 'Monserrat44@gmail.com',
   },
   {
-    id: '5kma53ae2',
+    id: '8',
     amount: 874,
     status: 'success',
     name: 'Silas Arturo',
     email: 'Silas22@gmail.com',
   },
   {
-    id: 'bhqecj4p2',
+    id: '9',
     amount: 721,
     status: 'failed',
     name: 'Caramella Gartara',
     email: 'carmella@hotmail.com',
   },
-]
+] as PaymentData[]
