@@ -19,6 +19,11 @@ export interface SortObject {
   orders?: SortOrders[]
 }
 
+export interface useSortOptions {
+  locale?: string
+  initialSort?: SortObject
+}
+
 const sortMachine = createMachine({
   id: 'sort',
   initial: SortDirection.ORIGINAL,
@@ -44,8 +49,10 @@ const sortMachine = createMachine({
   },
 })
 
-export function useSort<T>(data: MaybeRefOrGetter<T[]>, initialSort: SortObject = {}) {
+export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions = {}) {
+  const { initialSort = {}, locale } = options
   const { sortTarget = null, orders = [] } = initialSort
+
   const sort = reactive({ sortTarget, orders })
 
   const change = ({ sortTarget = null, orders = [] }: SortObject) => {
@@ -72,7 +79,7 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, initialSort: SortObject 
       return _data
     if (sort.orders[0].direction === SortDirection.ORIGINAL)
       return _data
-    return sortBy(_data, sort.orders)
+    return sortBy(_data, sort.orders, { locale })
   })
 
   return {

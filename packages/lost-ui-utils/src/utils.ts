@@ -5,15 +5,15 @@ export interface SortByOptions {
   locale?: string
 }
 
-export function sortBy(data: any[], targets: SortOrders[], options: SortByOptions = {}) {
+export function sortBy<T>(data: T[], targets: SortOrders[], options: SortByOptions = {}): T[] {
   const { locale = 'en' } = options
   const collator = new Intl.Collator(locale)
 
-  return data.slice().sort((a, b) => {
+  return data.slice().sort((a: T, b: T) => {
     let comparison = 0
     for (const target of targets) {
-      const aValue = a[target.target]
-      const bValue = b[target.target]
+      const aValue = a[target.target as keyof T] as string
+      const bValue = b[target.target as keyof T] as string
 
       comparison = collator.compare(aValue, bValue)
       if (comparison !== 0)

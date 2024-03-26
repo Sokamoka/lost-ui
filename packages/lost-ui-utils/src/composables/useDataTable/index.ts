@@ -9,6 +9,7 @@ export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   data: MaybeRef<T[]>
   columns: MaybeRef<ColumnsModel>
   initialSort?: SortObject
+  locale?: string
 }
 
 export interface UseDataTableReturn extends usePaginationReturn<Pick<UseDataTableOptions, 'data'>> {
@@ -48,9 +49,9 @@ export interface ConvertedColumnModel {
 }
 
 export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
-  const { columns, data, initialSort, itemsPerPage = 0, defaultPage = 1, siblingCount = 2 } = options
+  const { columns, data, initialSort, locale = 'en', itemsPerPage = 0, defaultPage = 1, siblingCount = 2 } = options
 
-  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, initialSort)
+  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, { initialSort, locale })
 
   const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(state, {
     itemsPerPage,
