@@ -9,14 +9,14 @@ export enum SortDirection {
   ORIGINAL = 'original',
 }
 
-export interface OrdersObject {
+export interface SortOrders {
   target: string
   direction: SortDirection
 }
 
 export interface SortObject {
   sortTarget?: string | null
-  orders?: OrdersObject[]
+  orders?: SortOrders[]
 }
 
 const sortMachine = createMachine({
@@ -60,7 +60,7 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, initialSort: SortObject 
         sort.orders[index].direction,
         order.direction,
       ),
-    })) as OrdersObject[]
+    })) as SortOrders[]
 
     sort.sortTarget = sortTarget
     sort.orders = nextOrders

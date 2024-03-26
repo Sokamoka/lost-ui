@@ -1,8 +1,8 @@
 import { shallowRef, toValue, watch } from 'vue'
 import { SortDirection } from '../useSort'
-import type { OrdersObject } from '../useSort'
+import type { SortOrders } from '../useSort'
 
-export function useSortBy<T extends OrdersObject>(data: any[], targets: T[]) {
+export function useSortBy<T extends SortOrders>(data: any[], targets: T[]) {
   const _data = shallowRef([])
   const collator = new Intl.Collator('en')
 

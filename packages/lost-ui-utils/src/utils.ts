@@ -1,7 +1,7 @@
 import { SortDirection } from './composables/useSort'
-import type { OrdersObject } from './composables/useSort'
+import type { SortOrders } from './composables/useSort'
 
-export function sortBy(data: any[], targets: OrdersObject[]) {
+export function sortBy(data: any[], targets: SortOrders[]) {
   const collator = new Intl.Collator('en')
 
   return data.slice().sort((a, b) => {

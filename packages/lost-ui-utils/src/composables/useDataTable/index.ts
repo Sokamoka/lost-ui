@@ -3,7 +3,7 @@ import type { ComputedRef, MaybeRef } from 'vue'
 import { isEmpty } from 'lodash-es'
 import { SortDirection, useSort } from '../useSort'
 import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
-import type { OrdersObject, SortObject } from '../useSort'
+import type { SortObject, SortOrders } from '../useSort'
 
 export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   data: MaybeRef<T[]>
@@ -21,7 +21,7 @@ export interface ColumnModel {
   headerData: { [key: string]: any }
   cellClass?: string
   rowClass?: string
-  sortOrders?: OrdersObject[]
+  sortOrders?: SortOrders[]
 }
 
 export interface ColumnsModel {
