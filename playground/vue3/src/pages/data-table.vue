@@ -4,6 +4,7 @@ import { SortDirection, useDataTable } from 'lost-ui-utils'
 import type { ColumnsModel, SortObject } from 'lost-ui-utils'
 import DataTable from '../components/DataTable.vue'
 import Pagination from '../components/Pagination.vue'
+import { PAYMENT_DATA } from '../mocks/data'
 import {
   Card,
   CardContent,
@@ -12,43 +13,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-const data = [
-  {
-    id: 'm5gr84i9',
-    name: 'Ákos Stégner',
-    amount: 316,
-    status: 'success',
-    email: 'ken99@yahoo.com',
-  },
-  {
-    id: '3u1reuv4',
-    name: 'András Kovács',
-    amount: 242,
-    status: 'success',
-    email: 'Abe45@gmail.com',
-  },
-  {
-    id: 'derv1ws0',
-    name: 'Endre Tóth',
-    amount: 837,
-    status: 'processing',
-    email: 'Monserrat44@gmail.com',
-  },
-  {
-    id: '5kma53ae',
-    name: 'Éva Kovács',
-    amount: 874,
-    status: 'success',
-    email: 'Silas22@gmail.com',
-  },
-  {
-    id: 'bhqecj4p',
-    name: 'dr. Nagy István',
-    amount: 721,
-    status: 'failed',
-    email: 'carmella@hotmail.com',
-  },
-]
+const data = PAYMENT_DATA
 
 const columns: ColumnsModel = {
   status: {
@@ -88,7 +53,7 @@ const columns: ColumnsModel = {
   },
 }
 
-const itemPerPage = ref(2)
+const itemPerPage = ref(4)
 
 const initialSort: SortObject = {
   sortTarget: 'amount',
