@@ -11,15 +11,31 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-const skip = ref(0)
+interface StateProducts {
+  title: string
+  price: number
+  id: number
+}
 
-const { state, execute } = useAsyncState(() =>
-  fetch(`https://dummyjson.com/products?limit=10&skip=${skip.value}&select=title,price,id`)
-    .then(t => t.json()), {}, { resetOnExecute: false })
+interface State {
+  limit: number
+  products: StateProducts[]
+  skip: number
+  total: number
+
+}
+
+const skip = ref(0)
+const limit = ref(15)
+
+const { state, execute } = useAsyncState<State>(() =>
+  fetch(`https://dummyjson.com/products?limit=${limit.value}&skip=${skip.value}&select=title,price,id`)
+    .then(t => t.json()), { limit: 0, products: [], skip: 0, total: 0 }, { resetOnExecute: false })
 
 const { state: list, isActive, fetchMore } = useFetchMore(computed(() => state.value.products), {
   skip,
   total: computed(() => state.value.total),
+  limit,
   onUpdate: () => execute(),
 })
 </script>
