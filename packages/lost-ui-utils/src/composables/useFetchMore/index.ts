@@ -1,12 +1,11 @@
 import { noop } from '@vueuse/core'
-import { computed, shallowRef, toValue, watch } from 'vue'
-import type { ComputedRef, MaybeRef, Ref, ShallowRef } from 'vue'
+import { computed, ref, shallowRef, toValue, watch } from 'vue'
+import type { ComputedRef, MaybeRef, ShallowRef } from 'vue'
 
 export interface UseFetchMoreOptions {
-  skip: Ref<number>
   limit?: MaybeRef<number>
   total: MaybeRef<number>
-  onUpdate?: (skip: number) => void
+  onUpdate?: (skip: number, limit: number) => void
 }
 
 export interface UseFetchMoreReturn<T> {
@@ -16,7 +15,9 @@ export interface UseFetchMoreReturn<T> {
 }
 
 export function useFetchMore<T>(state: MaybeRef<T[]>, options: UseFetchMoreOptions): UseFetchMoreReturn<T> {
-  const { skip, limit = 10, total, onUpdate = noop } = options
+  const { limit = 10, total, onUpdate = noop } = options
+
+  const skip = ref(0)
   const _state = shallowRef<T[]>([])
 
   watch(state, (state) => {
@@ -29,7 +30,7 @@ export function useFetchMore<T>(state: MaybeRef<T[]>, options: UseFetchMoreOptio
     if (!isActive.value)
       return
     skip.value = skip.value + toValue(limit)
-    onUpdate?.(skip.value)
+    onUpdate?.(skip.value, toValue(limit))
   }
 
   return {

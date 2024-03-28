@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAsyncState } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useFetchMore } from 'lost-ui-utils'
 import { FetchMoreObserver } from 'lost-ui-utils/components'
 import {
@@ -18,18 +18,19 @@ interface Products {
   id: number
 }
 
-const skip = ref(0)
-const limit = ref(15)
+const startLimit = 20
 
-const { state, isLoading, execute } = useAsyncState(() =>
-  fetch(`https://dummyjson.com/products?limit=${limit.value}&skip=${skip.value}&select=title,price,id`)
-    .then(t => t.json()), { products: [] }, { resetOnExecute: false })
+const { state, isLoading, execute } = useAsyncState((args = {}) => {
+  const skip = args.skip || 0
+  const limit = args.limit || startLimit
+  return fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}&select=title,price,id`)
+    .then(t => t.json())
+}, { products: [] }, { resetOnExecute: false })
 
 const { state: list, isActive, fetchMore } = useFetchMore<Products>(computed(() => state.value.products), {
-  skip,
   total: computed(() => state.value.total),
-  limit,
-  onUpdate: () => execute(),
+  limit: 10,
+  onUpdate: (skip, limit) => execute(0, { skip, limit }),
 })
 </script>
 
