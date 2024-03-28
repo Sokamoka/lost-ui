@@ -6,6 +6,8 @@ export interface usePaginationOptions {
   itemsPerPage?: MaybeRef<number>
   defaultPage?: MaybeRef<number>
   siblingCount?: number
+  total?: MaybeRefOrGetter<number>
+  external?: boolean
   update?: (page: number) => void
 }
 
@@ -24,12 +26,16 @@ export function usePagination<T>(
     defaultPage,
     siblingCount = 5,
     itemsPerPage = 10,
+    external = false,
+    total = 0,
     update = noop,
   }: usePaginationOptions,
 ): usePaginationReturn<T> {
   const page = ref(defaultPage || 1)
 
   const totalItems = computed(() => {
+    if (toValue(total))
+      return toValue(total)
     return toValue(items).length
   })
 
@@ -69,6 +75,8 @@ export function usePagination<T>(
   }
 
   const state = computed<T[]>(() => {
+    if (external)
+      return toValue(items)
     if (!toValue(itemsPerPage))
       return toValue(items)
     const startIndex = (page.value - 1) * toValue(itemsPerPage)

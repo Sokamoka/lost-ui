@@ -1,5 +1,5 @@
 import { computed, unref } from 'vue'
-import type { ComputedRef, MaybeRef } from 'vue'
+import type { ComputedRef, MaybeRef, MaybeRefOrGetter } from 'vue'
 import { isEmpty } from 'lodash-es'
 import { SortDirection, useSort } from '../useSort'
 import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
@@ -10,10 +10,14 @@ export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   columns: MaybeRef<ColumnsModel>
   initialSort?: SortObject
   locale?: string
+  total?: MaybeRefOrGetter<number>
+  externalSort?: boolean
+  externalPagination?: boolean
 }
 
 export interface UseDataTableReturn extends usePaginationReturn<Pick<UseDataTableOptions, 'data'>> {
   columnModel: ComputedRef<ConvertedColumnModel[]>
+  sort: SortObject | undefined
 }
 
 export interface ColumnModel {
@@ -49,14 +53,27 @@ export interface ConvertedColumnModel {
 }
 
 export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
-  const { columns, data, initialSort, locale = 'en', itemsPerPage = 0, defaultPage = 1, siblingCount = 2 } = options
+  const {
+    columns,
+    data,
+    initialSort,
+    locale = 'en',
+    itemsPerPage = 0,
+    defaultPage = 1,
+    siblingCount = 2,
+    total = 0,
+    externalSort = false,
+    externalPagination = false,
+  } = options
 
-  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, { initialSort, locale })
+  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, { initialSort, locale, external: externalSort })
 
   const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(state, {
-    itemsPerPage,
+    total,
     defaultPage,
+    itemsPerPage,
     siblingCount,
+    external: externalPagination,
   })
 
   const columnModel = computed(() => {
@@ -65,7 +82,8 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
       const { title, headerClass, headerData, sortOrders, rowClass, ...attrs }
         = rawColumns[key] as ColumnModel
 
-      const isActive = sort.orders[0]?.target === key
+      const orders = sort.orders?.[0] ?? []
+      const isActive = orders.target === key
       const isSortable = !isEmpty(sortOrders)
 
       return {
@@ -77,10 +95,10 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
           headerData,
           isActive,
           isSortable,
-          isSortAsc: isActive && sort.orders[0]?.direction === SortDirection.ASCEND,
-          isSortDesc: isActive && sort.orders[0]?.direction === SortDirection.DESCEND,
-          isSortOrigi: isActive && sort.orders[0]?.direction === SortDirection.ORIGINAL,
-          direction: sort.orders[0]?.direction ?? null,
+          isSortAsc: isActive && orders.direction === SortDirection.ASCEND,
+          isSortDesc: isActive && orders.direction === SortDirection.DESCEND,
+          isSortOrigi: isActive && orders.direction === SortDirection.ORIGINAL,
+          direction: orders.direction || null,
           event: { click: isSortable ? () => change({ sortTarget: key, orders: sortOrders } as SortObject) : undefined },
         },
         row: { rowClass },
@@ -91,6 +109,7 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
 
   return {
     ...pagination,
+    sort,
     columnModel,
   }
 }

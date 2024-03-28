@@ -1,4 +1,4 @@
-import type { MaybeRefOrGetter } from 'vue'
+import type { ComputedRef, MaybeRefOrGetter } from 'vue'
 import { computed, reactive, toValue } from 'vue'
 import { createMachine } from '@xstate/fsm'
 import { sortBy } from '../../utils'
@@ -15,13 +15,20 @@ export interface SortOrders {
 }
 
 export interface SortObject {
-  sortTarget?: string | null
-  orders?: SortOrders[]
+  sortTarget: string | null
+  orders: SortOrders[]
 }
 
 export interface useSortOptions {
   locale?: string
   initialSort?: SortObject
+  external?: boolean
+}
+
+export interface useSortReturn<T> {
+  state: ComputedRef<T[]>
+  sort: SortObject
+  change: (params: SortObject) => void
 }
 
 const sortMachine = createMachine({
@@ -49,9 +56,9 @@ const sortMachine = createMachine({
   },
 })
 
-export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions = {}) {
-  const { initialSort = {}, locale } = options
-  const { sortTarget = null, orders = [] } = initialSort
+export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions = {}): useSortReturn<T> {
+  const { initialSort = {}, locale, external = false } = options
+  const { sortTarget = null, orders = [] } = initialSort as SortObject
 
   const sort = reactive({ sortTarget, orders })
 
@@ -75,6 +82,8 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions 
 
   const state = computed(() => {
     const _data = toValue(data)
+    if (external)
+      return _data
     if (!sort.sortTarget)
       return _data
     if (sort.orders[0].direction === SortDirection.ORIGINAL)
