@@ -24,7 +24,7 @@ export function useFetchMore<T>(state: MaybeRef<T[]>, options: UseFetchMoreOptio
     _state.value = [..._state.value, ...toValue(state)]
   })
 
-  const isActive = computed(() => _state.value.length < toValue(total))
+  const isActive = computed(() => _state.value.length <= toValue(total))
 
   function fetchMore() {
     if (!isActive.value)
