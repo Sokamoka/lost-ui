@@ -8,3 +8,4 @@ export { useSort, SortDirection, type SortOrders, type SortObject } from './comp
 export { usePagination } from './composables'
 export { useValidation } from './composables'
 export { useShowPassword } from './composables'
+export { useFetchMore } from './composables'
