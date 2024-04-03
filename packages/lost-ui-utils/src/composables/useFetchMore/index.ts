@@ -5,7 +5,7 @@ import type { ComputedRef, MaybeRef, ShallowRef } from 'vue'
 export interface UseFetchMoreOptions {
   limit?: MaybeRef<number>
   total: MaybeRef<number>
-  onUpdate?: (skip: number, limit: number) => void
+  onUpdated?: (skip: number, limit: number) => void
 }
 
 export interface UseFetchMoreReturn<T> {
@@ -15,7 +15,7 @@ export interface UseFetchMoreReturn<T> {
 }
 
 export function useFetchMore<T>(state: MaybeRef<T[]>, options: UseFetchMoreOptions): UseFetchMoreReturn<T> {
-  const { limit = 10, total, onUpdate = noop } = options
+  const { limit = 10, total, onUpdated = noop } = options
 
   const skip = ref(0)
   const _state = shallowRef<T[]>([])
@@ -30,7 +30,7 @@ export function useFetchMore<T>(state: MaybeRef<T[]>, options: UseFetchMoreOptio
     if (!isActive.value)
       return
     skip.value = skip.value + toValue(limit)
-    onUpdate?.(skip.value, toValue(limit))
+    onUpdated?.(skip.value, toValue(limit))
   }
 
   return {

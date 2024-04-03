@@ -14,7 +14,7 @@ export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   total?: MaybeRefOrGetter<number>
   externalSort?: boolean
   externalPagination?: boolean
-  onChange?: (payload: { page: number, sort: SortObject }) => void
+  onChanged?: (payload: { page: number, sort: SortObject }) => void
 }
 
 export interface UseDataTableReturn extends usePaginationReturn<Pick<UseDataTableOptions, 'data'>> {
@@ -66,10 +66,15 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
     total = 0,
     externalSort = false,
     externalPagination = false,
-    onChange = noop,
+    onChanged = noop,
   } = options
 
-  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, { initialSort, locale, external: externalSort, onChange: _onChange })
+  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, {
+    initialSort,
+    locale,
+    external: externalSort,
+    onUpdated: _onChanged,
+  })
 
   const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(state, {
     total,
@@ -77,7 +82,7 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
     itemsPerPage,
     siblingCount,
     external: externalPagination,
-    update: _onChange,
+    onUpdated: _onChanged,
   })
 
   const columnModel = computed(() => {
@@ -111,12 +116,12 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
     })
   })
 
-  function _onChange() {
+  function _onChanged() {
     const payload = {
       page: pagination.page.value,
       sort,
     }
-    onChange(payload)
+    onChanged(payload)
   }
 
   return {

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { SortDirection, useDataTable } from 'lost-ui-utils'
-import type { ColumnsModel, SortObject } from 'lost-ui-utils'
+import type { SortObject } from 'lost-ui-utils'
 import { useAsyncState } from '@vueuse/core'
 import DataTable from '../components/DataTable.vue'
 import Pagination from '../components/Pagination.vue'
+import { USER_COLUMNS } from '../columns'
 
 import {
   Card,
@@ -14,65 +15,17 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 
-const columns: ColumnsModel = {
-  id: {
-    title: 'Id',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'E-mail',
-    },
-    cellClass: 'text-left',
-    sortOrders: [{ target: 'id', direction: SortDirection.DESCEND }],
-  },
-  firstName: {
-    title: 'First Name',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'First Name',
-    },
-    sortOrders: [],
-  },
-  lastName: {
-    title: 'Last Name',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'Last Name',
-    },
-    sortOrders: [],
-  },
-  email: {
-    title: 'E-mail',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'E-mail',
-    },
-    cellClass: 'text-left',
-    sortOrders: [{ target: 'email', direction: SortDirection.ASCEND }],
-  },
-  gender: {
-    title: 'Gender',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'Gender',
-    },
-    cellClass: 'text-left',
-    sortOrders: [{ target: 'gender', direction: SortDirection.ASCEND }],
-  },
-}
+const columns = USER_COLUMNS
 
 const itemsPerPage = 20
 
 const { state: data, execute } = useAsyncState((args = {}) => {
   const page = args.page || 1
   const limit = args.limit || itemsPerPage
-  return fetch(`http://localhost:3456/users?_page=${page}&_per_page=${limit}&_sort=${args.sort}`)
+  const sort = args.sort
+  return fetch(`http://localhost:3456/users?_page=${page}&_per_page=${limit}&_sort=${sort}`)
     .then(t => t.json())
 }, { data: [] }, { resetOnExecute: false })
-
-const initialSort: SortObject = {
-  sortTarget: 'amount',
-  orders: [{ target: 'amount', direction: SortDirection.DESCEND }],
-}
 
 const totalItem = computed(() => data.value.items || 0)
 
@@ -80,20 +33,23 @@ const { columnModel, state, page, sort } = useDataTable({
   columns,
   data: computed(() => data.value.data),
   itemsPerPage,
-  initialSort,
   total: totalItem,
   externalSort: true,
   externalPagination: true,
-  onChange: ({ page, sort }) => {
-    const sortTarget = sort?.sortTarget
-    const _sort = sort?.orders[0].direction === SortDirection.DESCEND
-      ? `-${sortTarget}`
-      : sort?.orders[0].direction === SortDirection.ORIGINAL
-        ? undefined
-        : sortTarget
+  onChanged: ({ page, sort }) => {
+    const _sort = createSortString(sort)
     execute(0, { page, itemsPerPage, sort: _sort })
   },
 })
+
+function createSortString(sort: SortObject) {
+  const sortOrders = sort?.orders[0] ?? {}
+  return sortOrders.direction === SortDirection.DESCEND
+    ? `-${sortOrders.target}`
+    : sortOrders.direction === SortDirection.ORIGINAL
+      ? undefined
+      : sortOrders.target
+}
 </script>
 
 <template>

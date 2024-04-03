@@ -8,7 +8,7 @@ export interface usePaginationOptions {
   siblingCount?: number
   total?: MaybeRefOrGetter<number>
   external?: boolean
-  update?: (page: number) => void
+  onUpdated?: (page: number) => void
 }
 
 export interface usePaginationReturn<T> {
@@ -28,7 +28,7 @@ export function usePagination<T>(
     itemsPerPage = 10,
     external = false,
     total = 0,
-    update = noop,
+    onUpdated = noop,
   }: usePaginationOptions,
 ): usePaginationReturn<T> {
   const page = ref(defaultPage || 1)
@@ -55,19 +55,19 @@ export function usePagination<T>(
     return range.slice(startIndex, startIndex + rangeLength)
   })
 
-  watch(page, () => update(page.value))
+  watch(page, () => onUpdated(page.value))
 
   const pageStep = (v: number) => {
     const _page = page.value + v
     if (validPage(_page)) {
       page.value = _page
-      update(_page)
+      onUpdated(_page)
     }
   }
 
   const goTo = (_page: number) => {
     if (validPage(_page)) {
-      update(_page)
+      onUpdated(_page)
       page.value = _page
     }
   }

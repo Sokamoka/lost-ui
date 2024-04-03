@@ -24,7 +24,7 @@ export interface useSortOptions {
   locale?: string
   initialSort?: SortObject
   external?: boolean
-  onChange?: (params: SortObject) => void
+  onUpdated?: (params: SortObject) => void
 }
 
 export interface useSortReturn<T> {
@@ -59,7 +59,7 @@ const sortMachine = createMachine({
 })
 
 export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions = {}): useSortReturn<T> {
-  const { initialSort = {}, locale, external = false, onChange = noop } = options
+  const { initialSort = {}, locale, external = false, onUpdated = noop } = options
   const { sortTarget = null, orders = [] } = initialSort as SortObject
 
   const sort = reactive({ sortTarget, orders })
@@ -68,7 +68,7 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions 
     if (sort.sortTarget !== sortTarget) {
       sort.sortTarget = sortTarget
       sort.orders = orders
-      onChange(sort)
+      onUpdated(sort)
       return
     }
     const nextOrders = orders.map((order, index) => ({
@@ -81,7 +81,7 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions 
 
     sort.sortTarget = sortTarget
     sort.orders = nextOrders
-    onChange(sort)
+    onUpdated(sort)
   }
 
   const state = computed(() => {

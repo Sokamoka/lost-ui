@@ -30,7 +30,7 @@ const { state, isLoading, execute } = useAsyncState((args = {}) => {
 const { state: list, isActive, fetchMore } = useFetchMore<Products>(computed(() => state.value.products), {
   total: computed(() => state.value.total),
   limit: 10,
-  onUpdate: (skip, limit) => execute(0, { skip, limit }),
+  onUpdated: (skip, limit) => execute(0, { skip, limit }),
 })
 </script>
 
