@@ -18,23 +18,6 @@ import {
 // const data = PAYMENT_DATA
 
 const columns: ColumnsModel = {
-  title: {
-    title: 'Product',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'Product',
-    },
-    sortOrders: [],
-  },
-  price: {
-    title: 'Price',
-    headerClass: 'text-left',
-    headerData: {
-      tooltip: 'Price',
-    },
-    cellClass: 'text-left',
-    sortOrders: [{ target: 'price', direction: SortDirection.ASCEND }],
-  },
   id: {
     title: 'Id',
     headerClass: 'text-left',
@@ -44,24 +27,49 @@ const columns: ColumnsModel = {
     cellClass: 'text-left',
     sortOrders: [{ target: 'email', direction: SortDirection.DESCEND }],
   },
-  // amount: {
-  //   title: 'Amount',
-  //   headerClass: 'text-right text-indigo-300',
-  //   headerData: {
-  //     tooltip: 'Unique User Name',
-  //   },
-  //   cellClass: 'text-right font-bold',
-  //   sortOrders: [{ target: 'amount', direction: SortDirection.DESCEND }],
-  // },
+  firstName: {
+    title: 'First Name',
+    headerClass: 'text-left',
+    headerData: {
+      tooltip: 'First Name',
+    },
+    sortOrders: [],
+  },
+  lastName: {
+    title: 'Last Name',
+    headerClass: 'text-left',
+    headerData: {
+      tooltip: 'Last Name',
+    },
+    sortOrders: [],
+  },
+  email: {
+    title: 'E-mail',
+    headerClass: 'text-left',
+    headerData: {
+      tooltip: 'E-mail',
+    },
+    cellClass: 'text-left',
+    sortOrders: [{ target: 'email', direction: SortDirection.ASCEND }],
+  },
+  gender: {
+    title: 'Gender',
+    headerClass: 'text-left',
+    headerData: {
+      tooltip: 'Gender',
+    },
+    cellClass: 'text-left',
+    sortOrders: [{ target: 'price', direction: SortDirection.ASCEND }],
+  },
 }
 
-const startLimit = 10
-const itemsPerPage = ref(10)
+const startLimit = 15
+const itemsPerPage = ref(15)
 
 const { state: data, execute } = useAsyncState((args = {}) => {
   const skip = args.skip || 1
   const limit = args.limit || startLimit
-  return fetch(`https://6605db50d92166b2e3c2e822.mockapi.io/api/v1/products?limit=${limit}&page=${skip}`)
+  return fetch(`http://localhost:3456/users?_page=${skip}&_per_page=${limit}`)
     .then(t => t.json())
 }, { products: [] }, { resetOnExecute: false })
 
@@ -70,11 +78,11 @@ const initialSort: SortObject = {
   orders: [{ target: 'amount', direction: SortDirection.DESCEND }],
 }
 
-const totalItem = computed(() => data.value.total || 0)
+const totalItem = computed(() => data.value.items || 0)
 
 const { columnModel, state, page, sort } = useDataTable({
   columns,
-  data: computed(() => data.value.products),
+  data: computed(() => data.value.data),
   itemsPerPage,
   initialSort,
   total: totalItem,
@@ -84,6 +92,12 @@ const { columnModel, state, page, sort } = useDataTable({
 
 watch(page, (p) => {
   execute(0, { skip: p, itemsPerPage })
+})
+
+watch(() => sort, (s) => {
+  console.log(s)
+  // const sort = s.target
+  // execute(0, { skip: p, itemsPerPage, sort })
 })
 </script>
 

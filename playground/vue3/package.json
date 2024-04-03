@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
+    "mock": "json-server ./src/mocks/db.json --port 3456",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "@vitejs/plugin-vue": "^5.0.3",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.56.0",
+    "json-server": "1.0.0-alpha.23",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "unplugin-vue-router": "^0.8.5",
