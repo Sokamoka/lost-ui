@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { usePagination } from 'lost-ui-utils'
+import { useAsyncState } from '@vueuse/core'
+import type { UserColumns } from '../columns.ts'
 import {
   Card,
   CardContent,
@@ -7,12 +9,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { PAYMENT_DATA } from '@/mocks/data'
-import type { PaymentData } from '@/mocks/data'
+import { Button } from '@/components/ui/button'
 
-const items = PAYMENT_DATA
+const { state: items } = useAsyncState(() => fetch('http://localhost:3456/users').then(t => t.json()), [])
 
-const { state, page, totalPage, pageStep } = usePagination<PaymentData>(items, { itemsPerPage: 3 })
+const { state, page, totalPage, pageStep } = usePagination<UserColumns>(items, { itemsPerPage: 10 })
 </script>
 
 <template>
@@ -20,24 +21,27 @@ const { state, page, totalPage, pageStep } = usePagination<PaymentData>(items, {
     <Card>
       <CardHeader>
         <CardTitle>Registerd Users</CardTitle>
-        <CardDescription>Registerd user list</CardDescription>
+        <CardDescription>Registerd user list {{ page }} of {{ totalPage }}</CardDescription>
       </CardHeader>
       <CardContent class="space-y-5">
         <div v-for="item in state" :key="item.id" class="border border-slate-200 p-3 rounded-sm">
-          <h1>{{ item.id }} {{ item.name }}</h1>
+          <h1 class="font-bold">
+            {{ item.id }} {{ item.firstName }} {{ item.lastName }}
+          </h1>
+          <p class="text-xs text-gray-500">
+            {{ item.email }} / {{ item.gender }}
+          </p>
         </div>
       </CardContent>
     </Card>
 
-    <div class="flex gap-3">
-      {{ page }}
-      {{ totalPage }}
-      <button :class="{ 'opacity-50': page === 1 }" @click="pageStep(-1)">
+    <div class="flex gap-3 mt-5">
+      <Button :class="{ 'opacity-20': page === 1 }" @click="pageStep(-1)">
         Prev
-      </button>
-      <button :class="{ 'opacity-50': page === totalPage }" @click="pageStep(1)">
+      </Button>
+      <Button :class="{ 'opacity-20': page === totalPage }" @click="pageStep(1)">
         Next
-      </button>
+      </Button>
     </div>
   </div>
 </template>
