@@ -1,6 +1,7 @@
 import { computed, unref } from 'vue'
 import type { ComputedRef, MaybeRef, MaybeRefOrGetter } from 'vue'
 import { isEmpty } from 'lodash-es'
+import { noop } from '@vueuse/core'
 import { SortDirection, useSort } from '../useSort'
 import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
 import type { SortObject, SortOrders } from '../useSort'
@@ -13,6 +14,7 @@ export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   total?: MaybeRefOrGetter<number>
   externalSort?: boolean
   externalPagination?: boolean
+  onChange?: (payload: { page: number, sort: SortObject }) => void
 }
 
 export interface UseDataTableReturn extends usePaginationReturn<Pick<UseDataTableOptions, 'data'>> {
@@ -64,9 +66,10 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
     total = 0,
     externalSort = false,
     externalPagination = false,
+    onChange = noop,
   } = options
 
-  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, { initialSort, locale, external: externalSort })
+  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, { initialSort, locale, external: externalSort, onChange: _onChange })
 
   const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(state, {
     total,
@@ -74,6 +77,7 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
     itemsPerPage,
     siblingCount,
     external: externalPagination,
+    update: _onChange,
   })
 
   const columnModel = computed(() => {
@@ -106,6 +110,14 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
       } as ConvertedColumnModel
     })
   })
+
+  function _onChange() {
+    const payload = {
+      page: pagination.page.value,
+      sort,
+    }
+    onChange(payload)
+  }
 
   return {
     ...pagination,

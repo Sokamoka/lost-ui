@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ConvertedColumnModel } from 'lost-ui-utils'
+import { LucideChevronDown, LucideChevronUp, LucideChevronsUpDown } from 'lucide-vue-next'
 import {
   Table,
   TableBody,
@@ -27,9 +28,9 @@ const props = withDefaults(defineProps<Props>(), {
         <TableHead
           v-for="column in props.columnModel"
           :key="column.key"
-          class="text-gray-900 border-b border-gray-200 border-b-solid text-xs font-bold" :class="[
+          class="align-middle text-gray-900 border-b border-gray-200 border-b-solid text-xs font-bold" :class="[
             column.header.headerClass,
-            { 'bg-indigo-50': column.header.isActive },
+            { 'bg-gray-200': column.header.isActive },
           ]"
           :title="column.header.headerData.tooltip"
           v-on="column.header.event"
@@ -37,10 +38,18 @@ const props = withDefaults(defineProps<Props>(), {
           <slot :name="`header-${column.prop}`" :column="column">
             {{ column.title }}
           </slot>
-          <span v-if="column.header.isSortAsc" class="i-mdi-sort-ascending inline-block" />
-          <span v-if="column.header.isSortDesc" class="i-mdi-sort-descending inline-block" />
-          <span v-if="column.header.isSortOrigi" class="i-mdi-sort inline-block" />
-          <span v-if="column.header.isSortable && !column.header.isActive" class="i-mdi-sort inline-block opacity-50" />
+          <span v-if="column.header.isSortAsc">
+            <LucideChevronUp class="w-4 inline-block ml-1" />
+          </span>
+          <span v-if="column.header.isSortDesc">
+            <LucideChevronDown class="w-4 inline-block ml-1" />
+          </span>
+          <span v-if="column.header.isSortOrigi">
+            <LucideChevronsUpDown class="w-4 inline-block ml-1" />
+          </span>
+          <span v-if="column.header.isSortable && !column.header.isActive">
+            <LucideChevronsUpDown class="w-4 inline-block ml-1" />
+          </span>
         </TableHead>
       </TableRow>
     </TableHeader>
@@ -49,7 +58,7 @@ const props = withDefaults(defineProps<Props>(), {
         <TableCell
           v-for="column in props.columnModel"
           :key="column.key"
-          :class="[column.cell.cellClass, { 'bg-indigo-50': column.cell.isActive }]"
+          :class="[column.cell.cellClass, { 'bg-gray-100': column.cell.isActive }]"
         >
           <slot :name="`cell-${column.prop}`" :column="column" :row="row">
             {{ row[column.prop] }}

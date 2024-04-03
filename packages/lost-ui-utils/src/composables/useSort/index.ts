@@ -1,6 +1,7 @@
 import type { ComputedRef, MaybeRefOrGetter } from 'vue'
 import { computed, reactive, toValue } from 'vue'
 import { createMachine } from '@xstate/fsm'
+import { noop } from '@vueuse/core'
 import { sortBy } from '../../utils'
 
 export enum SortDirection {
@@ -23,6 +24,7 @@ export interface useSortOptions {
   locale?: string
   initialSort?: SortObject
   external?: boolean
+  onChange?: (params: SortObject) => void
 }
 
 export interface useSortReturn<T> {
@@ -57,7 +59,7 @@ const sortMachine = createMachine({
 })
 
 export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions = {}): useSortReturn<T> {
-  const { initialSort = {}, locale, external = false } = options
+  const { initialSort = {}, locale, external = false, onChange = noop } = options
   const { sortTarget = null, orders = [] } = initialSort as SortObject
 
   const sort = reactive({ sortTarget, orders })
@@ -66,6 +68,7 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions 
     if (sort.sortTarget !== sortTarget) {
       sort.sortTarget = sortTarget
       sort.orders = orders
+      onChange(sort)
       return
     }
     const nextOrders = orders.map((order, index) => ({
@@ -78,6 +81,7 @@ export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions 
 
     sort.sortTarget = sortTarget
     sort.orders = nextOrders
+    onChange(sort)
   }
 
   const state = computed(() => {

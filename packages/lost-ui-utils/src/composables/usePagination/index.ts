@@ -1,4 +1,4 @@
-import { computed, ref, toValue } from 'vue'
+import { computed, ref, toValue, watch } from 'vue'
 import type { ComputedRef, MaybeRef, MaybeRefOrGetter, Ref } from 'vue'
 import { noop } from '@vueuse/core'
 
@@ -54,6 +54,8 @@ export function usePagination<T>(
 
     return range.slice(startIndex, startIndex + rangeLength)
   })
+
+  watch(page, () => update(page.value))
 
   const pageStep = (v: number) => {
     const _page = page.value + v

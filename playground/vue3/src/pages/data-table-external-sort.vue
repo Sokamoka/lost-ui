@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { SortDirection, useDataTable } from 'lost-ui-utils'
 import type { ColumnsModel, SortObject } from 'lost-ui-utils'
 import { useAsyncState } from '@vueuse/core'
 import DataTable from '../components/DataTable.vue'
 import Pagination from '../components/Pagination.vue'
 
-// import { PAYMENT_DATA } from '../mocks/data'
 import {
   Card,
   CardContent,
@@ -14,8 +13,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-
-// const data = PAYMENT_DATA
 
 const columns: ColumnsModel = {
   id: {
@@ -25,7 +22,7 @@ const columns: ColumnsModel = {
       tooltip: 'E-mail',
     },
     cellClass: 'text-left',
-    sortOrders: [{ target: 'email', direction: SortDirection.DESCEND }],
+    sortOrders: [{ target: 'id', direction: SortDirection.DESCEND }],
   },
   firstName: {
     title: 'First Name',
@@ -59,19 +56,18 @@ const columns: ColumnsModel = {
       tooltip: 'Gender',
     },
     cellClass: 'text-left',
-    sortOrders: [{ target: 'price', direction: SortDirection.ASCEND }],
+    sortOrders: [{ target: 'gender', direction: SortDirection.ASCEND }],
   },
 }
 
-const startLimit = 15
-const itemsPerPage = ref(15)
+const itemsPerPage = 20
 
 const { state: data, execute } = useAsyncState((args = {}) => {
-  const skip = args.skip || 1
-  const limit = args.limit || startLimit
-  return fetch(`http://localhost:3456/users?_page=${skip}&_per_page=${limit}`)
+  const page = args.page || 1
+  const limit = args.limit || itemsPerPage
+  return fetch(`http://localhost:3456/users?_page=${page}&_per_page=${limit}&_sort=${args.sort}`)
     .then(t => t.json())
-}, { products: [] }, { resetOnExecute: false })
+}, { data: [] }, { resetOnExecute: false })
 
 const initialSort: SortObject = {
   sortTarget: 'amount',
@@ -88,16 +84,15 @@ const { columnModel, state, page, sort } = useDataTable({
   total: totalItem,
   externalSort: true,
   externalPagination: true,
-})
-
-watch(page, (p) => {
-  execute(0, { skip: p, itemsPerPage })
-})
-
-watch(() => sort, (s) => {
-  console.log(s)
-  // const sort = s.target
-  // execute(0, { skip: p, itemsPerPage, sort })
+  onChange: ({ page, sort }) => {
+    const sortTarget = sort?.sortTarget
+    const _sort = sort?.orders[0].direction === SortDirection.DESCEND
+      ? `-${sortTarget}`
+      : sort?.orders[0].direction === SortDirection.ORIGINAL
+        ? undefined
+        : sortTarget
+    execute(0, { page, itemsPerPage, sort: _sort })
+  },
 })
 </script>
 
