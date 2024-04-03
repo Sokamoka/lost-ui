@@ -20,7 +20,7 @@ declare module 'vue-router/auto-routes' {
   export interface RouteNamedMap {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/data-table': RouteRecordInfo<'/data-table', '/data-table', Record<never, never>, Record<never, never>>,
-    '/data-table-external-sort': RouteRecordInfo<'/data-table-external-sort', '/data-table-external-sort', Record<never, never>, Record<never, never>>,
+    '/data-table-external-sort-and-pagination': RouteRecordInfo<'/data-table-external-sort-and-pagination', '/data-table-external-sort-and-pagination', Record<never, never>, Record<never, never>>,
     '/form-validation': RouteRecordInfo<'/form-validation', '/form-validation', Record<never, never>, Record<never, never>>,
     '/list-fetch-more': RouteRecordInfo<'/list-fetch-more', '/list-fetch-more', Record<never, never>, Record<never, never>>,
     '/list-pagination': RouteRecordInfo<'/list-pagination', '/list-pagination', Record<never, never>, Record<never, never>>,
