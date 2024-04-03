@@ -20,9 +20,14 @@ export interface SortObject {
   orders: SortOrders[]
 }
 
+export interface SortObjectPayload {
+  sortTarget: string | null
+  orders: SortDirection | SortOrders | SortOrders[]
+}
+
 export interface useSortOptions {
   locale?: string
-  initialSort?: SortObject
+  initialSort?: SortObjectPayload
   external?: boolean
   onUpdated?: (params: SortObject) => void
 }
@@ -30,7 +35,7 @@ export interface useSortOptions {
 export interface useSortReturn<T> {
   state: ComputedRef<T[]>
   sort: SortObject
-  change: (params: SortObject) => void
+  change: (params: SortObjectPayload) => void
 }
 
 const sortMachine = createMachine({
@@ -59,12 +64,13 @@ const sortMachine = createMachine({
 })
 
 export function useSort<T>(data: MaybeRefOrGetter<T[]>, options: useSortOptions = {}): useSortReturn<T> {
-  const { initialSort = {}, locale, external = false, onUpdated = noop } = options
-  const { sortTarget = null, orders = [] } = initialSort as SortObject
+  const { initialSort = { sortTarget: null, orders: [] }, locale, external = false, onUpdated = noop } = options
+  const { sortTarget = null, orders = [] } = convertSortParamsPayload(initialSort) as SortObject
 
   const sort = reactive({ sortTarget, orders })
 
-  const change = ({ sortTarget = null, orders = [] }: SortObject) => {
+  const change = (payload: SortObjectPayload) => {
+    const { sortTarget = null, orders = [] } = convertSortParamsPayload(payload)
     if (sort.sortTarget !== sortTarget) {
       sort.sortTarget = sortTarget
       sort.orders = orders
@@ -106,4 +112,13 @@ function transitionOrderState(originalSortState: string, sortState: string) {
   const direction
     = sortState === SortDirection.ASCEND ? 'DIRECTION2' : 'DIRECTION1'
   return sortMachine.transition(originalSortState, direction).value
+}
+
+function convertSortParamsPayload(params: SortObjectPayload): SortObject {
+  const { sortTarget = null, orders = [] } = params
+  if (Array.isArray(orders))
+    return { sortTarget, orders }
+  if (typeof orders === 'object')
+    return { sortTarget, orders: [orders] }
+  return { sortTarget, orders: [{ target: sortTarget || '', direction: SortDirection.ASCEND }] }
 }

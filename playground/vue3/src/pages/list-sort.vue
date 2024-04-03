@@ -24,7 +24,7 @@ const { state, sort, change } = useSort<UserColumns>(items)
         <CardDescription>Registerd user</CardDescription>
       </CardHeader>
       <CardContent class="space-y-5">
-        <code>{{ sort }}</code>
+        <pre class="bg-black text-white text-xs p-3 rounded">{{ sort }}</pre>
         <div class="flex items-center">
           <p class="text-sm font-bold">
             Sort:
@@ -32,21 +32,21 @@ const { state, sort, change } = useSort<UserColumns>(items)
           <Button
             variant="link"
             :class="[sort.sortTarget === 'firstName' ? 'text-indigo-500' : 'text-gray-400']"
-            @click="() => change({ sortTarget: 'firstName', orders: [{ target: 'firstName', direction: SortDirection.ASCEND }] })"
+            @click="() => change({ sortTarget: 'firstName', orders: [{ target: 'firstName', direction: SortDirection.ASCEND }, { target: 'lastName', direction: SortDirection.ASCEND }] })"
           >
             First Name
           </Button>
           <Button
             variant="link"
             :class="[sort.sortTarget === 'email' ? 'text-indigo-500' : 'text-gray-400']"
-            @click="() => change({ sortTarget: 'email', orders: [{ target: 'email', direction: SortDirection.ASCEND }] })"
+            @click="() => change({ sortTarget: 'email', orders: { target: 'email', direction: SortDirection.ASCEND } })"
           >
             E-mail
           </Button>
           <Button
             variant="link"
             :class="[sort.sortTarget === 'gender' ? 'text-indigo-500' : 'text-gray-400']"
-            @click="() => change({ sortTarget: 'gender', orders: [{ target: 'gender', direction: SortDirection.ASCEND }] })"
+            @click="() => change({ sortTarget: 'gender', orders: SortDirection.ASCEND })"
           >
             Gender
           </Button>

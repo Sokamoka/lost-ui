@@ -4,12 +4,12 @@ import { isEmpty } from 'lodash-es'
 import { noop } from '@vueuse/core'
 import { SortDirection, useSort } from '../useSort'
 import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
-import type { SortObject, SortOrders } from '../useSort'
+import type { SortObject, SortObjectPayload, SortOrders } from '../useSort'
 
 export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   data: MaybeRef<T[]>
   columns: MaybeRef<ColumnsModel>
-  initialSort?: SortObject
+  initialSort?: SortObjectPayload
   locale?: string
   total?: MaybeRefOrGetter<number>
   externalSort?: boolean

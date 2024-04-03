@@ -28,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
         <TableHead
           v-for="column in props.columnModel"
           :key="column.key"
-          class="align-middle text-gray-900 border-b border-gray-200 border-b-solid text-xs font-bold" :class="[
+          class="align-middle text-gray-500 border-b border-gray-200 border-b-solid text-xs font-bold" :class="[
             column.header.headerClass,
             { 'bg-gray-200': column.header.isActive },
           ]"

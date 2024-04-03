@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { SortDirection, useDataTable } from 'lost-ui-utils'
-import type { ColumnsModel, SortObject } from 'lost-ui-utils'
+import type { ColumnsModel } from 'lost-ui-utils'
 import DataTable from '../components/DataTable.vue'
 import Pagination from '../components/Pagination.vue'
 import { PAYMENT_DATA } from '../mocks/data'
@@ -44,7 +44,7 @@ const columns: ColumnsModel = {
   },
   amount: {
     title: 'Amount',
-    headerClass: 'text-right text-indigo-300',
+    headerClass: 'text-right text-orange-500',
     headerData: {
       tooltip: 'Unique User Name',
     },
@@ -55,9 +55,9 @@ const columns: ColumnsModel = {
 
 const itemsPerPage = ref(4)
 
-const initialSort: SortObject = {
+const initialSort = {
   sortTarget: 'amount',
-  orders: [{ target: 'amount', direction: SortDirection.DESCEND }],
+  orders: SortDirection.DESCEND,
 }
 
 const { columnModel, state, page } = useDataTable({ columns, data, itemsPerPage, initialSort })
