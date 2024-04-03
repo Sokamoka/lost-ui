@@ -1,6 +1,15 @@
 import { SortDirection } from 'lost-ui-utils'
 import type { ColumnsModel } from 'lost-ui-utils'
 
+export interface UserColumns {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  gender: string
+  type: string
+}
+
 export const USER_COLUMNS: ColumnsModel = {
   id: {
     title: 'Id',

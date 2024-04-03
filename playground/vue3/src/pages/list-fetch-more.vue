@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useAsyncState } from '@vueuse/core'
-import { computed } from 'vue'
 import { useFetchMore } from 'lost-ui-utils'
 import { FetchMoreObserver } from 'lost-ui-utils/components'
+import type { UserColumns } from '../columns.ts'
 import {
   Card,
   CardContent,
@@ -12,24 +12,20 @@ import {
 } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 
-interface Products {
-  title: string
-  price: number
-  id: number
-}
-
-const startLimit = 20
+const startLimit = 30
+const totalItems = 100
 
 const { state, isLoading, execute } = useAsyncState((args = {}) => {
   const skip = args.skip || 0
   const limit = args.limit || startLimit
-  return fetch(`https://dummyjson.com/products?limit=${limit}&skip=${skip}&select=title,price,id`)
+  return fetch(`http://localhost:3456/users?_limit=${limit}&_start=${skip}`)
     .then(t => t.json())
-}, { products: [] }, { resetOnExecute: false })
+}, [], { resetOnExecute: false })
 
-const { state: list, isActive, fetchMore } = useFetchMore<Products>(computed(() => state.value.products), {
-  total: computed(() => state.value.total),
-  limit: 10,
+const { state: list, isActive, fetchMore } = useFetchMore<UserColumns>(state, {
+  initialSkip: startLimit,
+  total: totalItems, // computed(() => state.value.items)
+  limit: 15,
   onUpdated: (skip, limit) => execute(0, { skip, limit }),
 })
 </script>
@@ -43,7 +39,12 @@ const { state: list, isActive, fetchMore } = useFetchMore<Products>(computed(() 
       </CardHeader>
       <CardContent class="space-y-5">
         <div v-for="item in list" :key="item.id" class="border border-slate-200 p-3 rounded-sm">
-          <h1>{{ item.id }} {{ item.title }}</h1>
+          <h1 class="text-xl font-bold">
+            {{ item.id }} - {{ item.firstName }} {{ item.lastName }} ({{ item.type }})
+          </h1>
+          <p class="text-base text-gray-500">
+            {{ item.email }} / {{ item.gender }}
+          </p>
         </div>
       </CardContent>
     </Card>
