@@ -8,12 +8,45 @@ import type { SortObject, SortObjectPayload, SortOrders } from '../useSort'
 
 export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   data: MaybeRef<T[]>
+  /**
+   * Columns deffinitions
+   *
+   */
   columns: MaybeRef<ColumnsModel>
+  /**
+   * Initial sort deffinitions
+   *
+   */
   initialSort?: SortObjectPayload
+  /**
+   * Locale settings for Intl.Collator sorting
+   * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/Collator
+   *
+   *  @default en
+   */
   locale?: string
+  /**
+   * Total count of all element
+   *
+   * @default 0
+   */
   total?: MaybeRefOrGetter<number>
+  /**
+   * External data sorting
+   *
+   * @default false
+   */
   externalSort?: boolean
+  /**
+   * External pagination
+   *
+   * @default false
+   */
   externalPagination?: boolean
+  /**
+   * Trigger it when the tasks changed.
+   *
+   */
   onChanged?: (payload: { page: number, sort: SortObject }) => void
 }
 
