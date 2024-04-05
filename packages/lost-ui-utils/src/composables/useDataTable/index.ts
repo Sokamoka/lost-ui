@@ -7,6 +7,12 @@ import { usePagination, type usePaginationOptions, type usePaginationReturn } fr
 import type { SortObject, SortObjectPayload, SortOrders } from '../useSort'
 
 export interface UseDataTableOptions extends usePaginationOptions {
+  /**
+   * Initial sort order object
+   *
+   * If you want the table to be sorted by one column by default
+   *
+   */
   initialSort?: SortObjectPayload
   /**
    * Locale settings for Intl.Collator sorting
@@ -84,7 +90,7 @@ export interface ConvertedColumnModel {
  * @param rows      Table rows data
  * @param options
  */
-export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsModel>, rows: MaybeRefOrGetter<Rows>, options: UseDataTableOptions): UseDataTableReturn<Rows> {
+export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsModel>, rows: MaybeRefOrGetter<Rows>, options?: UseDataTableOptions): UseDataTableReturn<Rows> {
   const {
     initialSort,
     locale = 'en',
@@ -95,7 +101,7 @@ export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsM
     externalSort = false,
     externalPagination = false,
     onChanged = noop,
-  } = options
+  } = options || {}
 
   const { state, sort, change } = useSort<Rows>(rows, {
     initialSort,
