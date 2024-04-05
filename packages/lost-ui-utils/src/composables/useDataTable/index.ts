@@ -86,8 +86,6 @@ export interface ConvertedColumnModel {
  */
 export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsModel>, rows: MaybeRefOrGetter<Rows>, options: UseDataTableOptions): UseDataTableReturn<Rows> {
   const {
-    // columns,
-    // rows,
     initialSort,
     locale = 'en',
     itemsPerPage = 0,
