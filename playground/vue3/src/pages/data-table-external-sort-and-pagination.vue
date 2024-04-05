@@ -5,6 +5,7 @@ import type { SortObject } from 'lost-ui-utils'
 import { useAsyncState } from '@vueuse/core'
 import DataTable from '../components/DataTable.vue'
 import Pagination from '../components/Pagination.vue'
+import Code from '../components/Code.vue'
 import { USER_COLUMNS } from '../columns'
 
 import {
@@ -29,18 +30,20 @@ const { state: data, execute } = useAsyncState((args = {}) => {
 
 const totalItem = computed(() => data.value.items || 0)
 
-const { columnModel, state, page, sort } = useDataTable({
+const { columnModel, state, page, sort } = useDataTable(
   columns,
-  data: computed(() => data.value.data),
-  itemsPerPage,
-  total: totalItem,
-  externalSort: true,
-  externalPagination: true,
-  onChanged: ({ page, sort }) => {
-    const _sort = createSortString(sort)
-    execute(0, { page, itemsPerPage, sort: _sort })
+  computed(() => data.value.data),
+  {
+    itemsPerPage,
+    total: totalItem,
+    externalSort: true,
+    externalPagination: true,
+    onChanged: ({ page, sort }) => {
+      const _sort = createSortString(sort)
+      execute(0, { page, itemsPerPage, sort: _sort })
+    },
   },
-})
+)
 
 function createSortString(sort: SortObject) {
   const sortOrders = sort?.orders[0] ?? {}
@@ -59,7 +62,7 @@ function createSortString(sort: SortObject) {
       <CardDescription>Registerd user list</CardDescription>
     </CardHeader>
     <CardContent>
-      {{ sort }}
+      <Code>{{ sort }}</Code>
       <DataTable :column-model="columnModel" :row-model="state">
         <template #cell-email="{ row }">
           <a :href="`mailto:${row.email}`">{{ row.email }}</a>

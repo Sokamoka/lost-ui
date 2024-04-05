@@ -60,7 +60,7 @@ const initialSort = {
   orders: SortDirection.DESCEND,
 }
 
-const { columnModel, state, page } = useDataTable({ columns, data, itemsPerPage, initialSort })
+const { columnModel, state, page } = useDataTable(columns, data, { itemsPerPage, initialSort })
 </script>
 
 <template>

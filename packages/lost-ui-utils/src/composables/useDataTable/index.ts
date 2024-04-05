@@ -6,17 +6,7 @@ import { SortDirection, useSort } from '../useSort'
 import { usePagination, type usePaginationOptions, type usePaginationReturn } from '../usePagination'
 import type { SortObject, SortObjectPayload, SortOrders } from '../useSort'
 
-export interface UseDataTableOptions<T = any> extends usePaginationOptions {
-  data: MaybeRef<T[]>
-  /**
-   * Columns deffinitions
-   *
-   */
-  columns: MaybeRef<ColumnsModel>
-  /**
-   * Initial sort deffinitions
-   *
-   */
+export interface UseDataTableOptions extends usePaginationOptions {
   initialSort?: SortObjectPayload
   /**
    * Locale settings for Intl.Collator sorting
@@ -50,7 +40,7 @@ export interface UseDataTableOptions<T = any> extends usePaginationOptions {
   onChanged?: (payload: { page: number, sort: SortObject }) => void
 }
 
-export interface UseDataTableReturn extends usePaginationReturn<Pick<UseDataTableOptions, 'data'>> {
+export interface UseDataTableReturn<Rows> extends usePaginationReturn<Rows> {
   columnModel: ComputedRef<ConvertedColumnModel[]>
   sort: SortObject | undefined
 }
@@ -87,10 +77,17 @@ export interface ConvertedColumnModel {
   cell: { isActive: boolean, cellClass: ColumnModel['cellClass'] }
 }
 
-export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
+/**
+ * Data Table with sorting and paginating
+ *
+ * @param columns   Table columns model
+ * @param rows      Table rows data
+ * @param options
+ */
+export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsModel>, rows: MaybeRefOrGetter<Rows>, options: UseDataTableOptions): UseDataTableReturn<Rows> {
   const {
-    columns,
-    data,
+    // columns,
+    // rows,
     initialSort,
     locale = 'en',
     itemsPerPage = 0,
@@ -102,14 +99,14 @@ export function useDataTable(options: UseDataTableOptions): UseDataTableReturn {
     onChanged = noop,
   } = options
 
-  const { state, sort, change } = useSort<Pick<UseDataTableOptions, 'data'>>(data, {
+  const { state, sort, change } = useSort<Rows>(rows, {
     initialSort,
     locale,
     external: externalSort,
     onUpdated: _onChanged,
   })
 
-  const pagination = usePagination<Pick<UseDataTableOptions, 'data'>>(state, {
+  const pagination = usePagination<Rows>(state, {
     total,
     defaultPage,
     itemsPerPage,

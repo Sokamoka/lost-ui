@@ -2,6 +2,7 @@
 import { SortDirection, useSort } from 'lost-ui-utils'
 import { useAsyncState } from '@vueuse/core'
 import type { UserColumns } from '../columns.ts'
+import Code from '../components/Code.vue'
 import {
   Card,
   CardContent,
@@ -24,7 +25,7 @@ const { state, sort, change } = useSort<UserColumns>(items)
         <CardDescription>Registerd user</CardDescription>
       </CardHeader>
       <CardContent class="space-y-5">
-        <pre class="bg-black text-white text-xs p-3 rounded">{{ sort }}</pre>
+        <Code>{{ sort }}</Code>
         <div class="flex items-center">
           <p class="text-sm font-bold">
             Sort:
