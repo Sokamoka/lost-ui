@@ -26,9 +26,29 @@ export interface SortObjectPayload {
 }
 
 export interface useSortOptions {
+  /**
+   * locale for Intl.Collator
+   *
+   * @default en
+   */
   locale?: string
+  /**
+   * Initial sort object
+   *
+   */
   initialSort?: SortObjectPayload
+  /**
+   * External data sorting
+   *
+   * @default false
+   */
   external?: boolean
+  /**
+   * Trigger it when the sort object is changed.
+   *
+   * @param params
+   * @returns SortObject
+   */
   onUpdated?: (params: SortObject) => void
 }
 
@@ -120,5 +140,5 @@ function convertSortParamsPayload(params: SortObjectPayload): SortObject {
     return { sortTarget, orders }
   if (typeof orders === 'object')
     return { sortTarget, orders: [orders] }
-  return { sortTarget, orders: [{ target: sortTarget || '', direction: SortDirection.ASCEND }] }
+  return { sortTarget, orders: [{ target: sortTarget || '', direction: orders || SortDirection.ASCEND }] }
 }

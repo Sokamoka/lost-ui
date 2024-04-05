@@ -4,7 +4,7 @@ Lost UI Utils is a collection of utility functions for Utility first components 
 ## Motivation
 
 
-## Utilities
+## Composables
 
 [x] useDataTable
 [x] useFetchMore
@@ -17,3 +17,7 @@ Lost UI Utils is a collection of utility functions for Utility first components 
 ## Components
 
 [x] FetchMoreObserver
+
+## Utils
+
+[x] SortBy Intl.collator sorting
