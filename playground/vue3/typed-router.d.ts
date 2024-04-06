@@ -21,6 +21,7 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/data-table': RouteRecordInfo<'/data-table', '/data-table', Record<never, never>, Record<never, never>>,
     '/data-table-external-sort-and-pagination': RouteRecordInfo<'/data-table-external-sort-and-pagination', '/data-table-external-sort-and-pagination', Record<never, never>, Record<never, never>>,
+    '/data-table-with-use-fetch': RouteRecordInfo<'/data-table-with-use-fetch', '/data-table-with-use-fetch', Record<never, never>, Record<never, never>>,
     '/form-validation': RouteRecordInfo<'/form-validation', '/form-validation', Record<never, never>, Record<never, never>>,
     '/lazy-loading-state': RouteRecordInfo<'/lazy-loading-state', '/lazy-loading-state', Record<never, never>, Record<never, never>>,
     '/list-fetch-more': RouteRecordInfo<'/list-fetch-more', '/list-fetch-more', Record<never, never>, Record<never, never>>,

@@ -90,7 +90,7 @@ export interface ConvertedColumnModel {
  * @param rows      Table rows data
  * @param options
  */
-export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsModel>, rows: MaybeRefOrGetter<Rows>, options?: UseDataTableOptions): UseDataTableReturn<Rows> {
+export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsModel>, rows?: MaybeRefOrGetter<Rows>, options?: UseDataTableOptions): UseDataTableReturn<Rows> {
   const {
     initialSort,
     locale = 'en',
@@ -103,7 +103,7 @@ export function useDataTable<Rows extends any[] = []>(columns: MaybeRef<ColumnsM
     onChanged = noop,
   } = options || {}
 
-  const { state, sort, change } = useSort<Rows>(rows, {
+  const { state, sort, change } = useSort<Rows>(rows || [], {
     initialSort,
     locale,
     external: externalSort,
