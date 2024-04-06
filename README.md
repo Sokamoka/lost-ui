@@ -21,3 +21,4 @@ Lost UI Utils is a collection of utility functions for Utility first components 
 ## Utils
 
 [x] SortBy Intl.collator sorting
+[ ] nextFrame

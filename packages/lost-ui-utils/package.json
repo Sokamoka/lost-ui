@@ -28,7 +28,7 @@
     "./dist"
   ],
   "scripts": {
-    "build": "vue-tsc && vite build",
+    "build": "vue-tsc && pnpm run lint:fix && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
