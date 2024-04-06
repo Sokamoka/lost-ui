@@ -1,8 +1,8 @@
 {
   "name": "lost-ui-utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
     "dev:vue3": "pnpm run -C playground/vue3 dev",
     "start:mock": "pnpm run -C playground/vue3 mock",
