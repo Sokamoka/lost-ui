@@ -1,7 +1,7 @@
 {
   "name": "lost-ui-utils",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "sideEffects": false,
   "exports": {
     ".": {
@@ -24,7 +24,7 @@
   "types": "./dist/index.d.ts",
   "typings": "./dist/index.d.ts",
   "files": [
-    "../../README",
+    "../../README.md",
     "./LICENSE",
     "./dist"
   ],
