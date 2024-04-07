@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 
-const projectRootDir = resolve(__dirname)
+// const projectRootDir = resolve(__dirname)
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -12,15 +12,15 @@ export default defineConfig({
     cleanVueFileName: true,
     exclude: ['src/test/**'],
   })],
-  resolve: {
-    alias: {
-      'lost-ui-utils/utils': resolve(projectRootDir, 'src/utils.ts'),
-    },
-  },
+  // resolve: {
+  //   alias: {
+  //     'lost-ui-utils/utils': resolve(projectRootDir, 'src/utils.ts'),
+  //   },
+  // },
   build: {
     lib: {
       name: 'lost-ui-utils',
-      entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/components.ts'), resolve(__dirname, 'src/utils.ts')],
+      entry: [resolve(__dirname, 'src/index.ts'), resolve(__dirname, 'src/components.ts')],
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

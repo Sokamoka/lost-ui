@@ -1,5 +1,5 @@
 {
-  "name": "@lost-ui/utils",
+  "name": "@lostui/utils",
   "type": "module",
   "version": "0.0.0",
   "sideEffects": false,
@@ -12,11 +12,6 @@
       "import": "./dist/components.js",
       "require": "./dist/components.cjs",
       "type": "./dist/components.d.ts"
-    },
-    "./utils": {
-      "import": "./dist/utils.js",
-      "require": "./dist/utils.cjs",
-      "type": "./dist/utils.d.ts"
     }
   },
   "main": "./dist/index.cjs",

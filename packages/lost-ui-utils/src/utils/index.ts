@@ -1,5 +1,5 @@
-import { SortDirection } from './composables/useSort'
-import type { SortOrders } from './composables/useSort'
+import { SortDirection } from '../composables/useSort'
+import type { SortOrders } from '../composables/useSort'
 
 export interface SortByOptions {
   locale?: string
