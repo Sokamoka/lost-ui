@@ -4,8 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev:vue3": "pnpm run -C playground/vue3 dev",
-    "start:mock": "pnpm run -C playground/vue3 mock",
+    "dev:vite": "pnpm run -C playgrounds/vite dev",
+    "start:mock": "pnpm run -C playgrounds/vite mock",
     "build": "pnpm -r --filter='./packages/*' run build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage --coverage.include=packages/lost-ui-utils/src/composables",
