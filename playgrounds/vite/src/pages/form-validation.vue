@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { useShowPassword, useValidation } from 'lost-ui-utils'
+import { useShowPassword, useValidation } from '@lostui/utils'
 import { Eye } from 'lucide-vue-next'
 import {
   Card,

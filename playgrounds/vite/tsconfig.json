@@ -12,7 +12,8 @@
 
     "paths": {
       "@/*": ["./src/*"],
-      "lost-ui-utils": ["../../packages/lost-ui-utils/dist/index.d.ts"]
+      "@lostui/utils": ["../../packages/lost-ui-utils/dist/index.d.ts"],
+      "@lostui/utils/components": ["../../packages/lost-ui-utils/dist/components.d.ts"]
     },
     "resolveJsonModule": true,
     "types": [

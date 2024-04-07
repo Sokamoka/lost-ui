@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@lostui/utils": "workspace:^",
     "@vueuse/core": "^10.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "lost-ui-utils": "workspace:^",
     "lucide-vue-next": "^0.363.0",
     "radix-vue": "^1.4.6",
     "tailwind-merge": "^2.2.1",

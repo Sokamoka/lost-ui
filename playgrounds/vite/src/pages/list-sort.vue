@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { SortDirection, useSort } from 'lost-ui-utils'
+import { SortDirection, useSort } from '@lostui/utils'
 import { useAsyncState } from '@vueuse/core'
 import type { UserColumns } from '../columns.ts'
 import Code from '../components/Code.vue'
@@ -33,7 +33,7 @@ const { state, sort, change } = useSort<UserColumns>(items)
           <Button
             variant="link"
             :class="[sort.sortTarget === 'id' ? 'text-indigo-500' : 'text-gray-400']"
-            @click="() => change({ sortTarget: 'id'})"
+            @click="() => change({ sortTarget: 'id' })"
           >
             Id
           </Button>

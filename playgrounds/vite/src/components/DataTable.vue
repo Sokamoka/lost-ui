@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ConvertedColumnModel } from 'lost-ui-utils'
+import type { ConvertedColumnModel } from '@lostui/utils'
 import { LucideChevronDown, LucideChevronUp, LucideChevronsUpDown } from 'lucide-vue-next'
 import {
   Table,

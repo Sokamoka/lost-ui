@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { usePagination } from 'lost-ui-utils'
+import { usePagination } from '@lostui/utils'
 import { useAsyncState } from '@vueuse/core'
 import type { UserColumns } from '../columns.ts'
 import {

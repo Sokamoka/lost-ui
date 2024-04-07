@@ -1,5 +1,5 @@
-import { SortDirection } from 'lost-ui-utils'
-import type { ColumnsModel } from 'lost-ui-utils'
+import { SortDirection } from '@lostui/utils'
+import type { ColumnsModel } from '@lostui/utils'
 
 export interface UserColumns {
   id: number

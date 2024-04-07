@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAsyncState } from '@vueuse/core'
-import { useFetchMore } from 'lost-ui-utils'
-import { FetchMoreObserver } from 'lost-ui-utils/components'
+import { useFetchMore } from '@lostui/utils'
+import { FetchMoreObserver } from '@lostui/utils/components'
 import type { UserColumns } from '../columns.ts'
 import {
   Card,

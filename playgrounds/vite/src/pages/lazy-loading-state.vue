@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Loader2 } from 'lucide-vue-next'
-import { useLazyLoadingState } from 'lost-ui-utils'
+import { useLazyLoadingState } from '@lostui/utils'
 import { useTimeoutFn } from '@vueuse/core'
 import { Button } from '@/components/ui/button'
 
