@@ -32,6 +32,13 @@ const { state, sort, change } = useSort<UserColumns>(items)
           </p>
           <Button
             variant="link"
+            :class="[sort.sortTarget === 'id' ? 'text-indigo-500' : 'text-gray-400']"
+            @click="() => change({ sortTarget: 'id'})"
+          >
+            Id
+          </Button>
+          <Button
+            variant="link"
             :class="[sort.sortTarget === 'firstName' ? 'text-indigo-500' : 'text-gray-400']"
             @click="() => change({ sortTarget: 'firstName', orders: [{ target: 'firstName', direction: SortDirection.ASCEND }, { target: 'lastName', direction: SortDirection.ASCEND }] })"
           >

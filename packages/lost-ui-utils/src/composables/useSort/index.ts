@@ -11,7 +11,7 @@ export enum SortDirection {
 }
 
 export interface SortOrders {
-  target: string
+  target: string | null
   direction: SortDirection
 }
 
@@ -22,7 +22,7 @@ export interface SortObject {
 
 export interface SortObjectPayload {
   sortTarget: string | null
-  orders: SortDirection | SortOrders | SortOrders[]
+  orders?: SortDirection | SortOrders | SortOrders[]
 }
 
 export interface useSortOptions {
@@ -135,10 +135,10 @@ function transitionOrderState(originalSortState: string, sortState: string) {
 }
 
 function convertSortParamsPayload(params: SortObjectPayload): SortObject {
-  const { sortTarget = null, orders = [] } = params
+  const { sortTarget = null, orders = undefined } = params
   if (Array.isArray(orders))
     return { sortTarget, orders }
   if (typeof orders === 'object')
     return { sortTarget, orders: [orders] }
-  return { sortTarget, orders: [{ target: sortTarget || '', direction: orders || SortDirection.ASCEND }] }
+  return { sortTarget, orders: [{ target: sortTarget || null, direction: orders || SortDirection.ASCEND }] }
 }
