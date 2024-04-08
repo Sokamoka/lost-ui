@@ -2,6 +2,7 @@ import { resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 // const projectRootDir = resolve(__dirname)
 
@@ -11,12 +12,14 @@ export default defineConfig({
     tsconfigPath: 'tsconfig.build.json',
     cleanVueFileName: true,
     exclude: ['src/test/**'],
+  }), viteStaticCopy({
+    targets: [
+      {
+        src: resolve(__dirname, '../../README.md'),
+        dest: resolve(__dirname, ''),
+      },
+    ],
   })],
-  // resolve: {
-  //   alias: {
-  //     'lost-ui-utils/utils': resolve(projectRootDir, 'src/utils.ts'),
-  //   },
-  // },
   build: {
     lib: {
       name: 'lost-ui-utils',
