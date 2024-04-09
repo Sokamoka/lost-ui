@@ -9,8 +9,8 @@
     "build": "pnpm -r --filter='./packages/*' run build",
     "test": "vitest",
     "test:coverage": "vitest run --coverage --coverage.include=packages/lost-ui-utils/src/composables",
-    "release": "vitest run && bumpp -r --all",
-    "publish:release": "pnpm run build && pnpm -r publish --access public"
+    "release": "vitest run && pnpm run build && bumpp -r --all",
+    "publish:release": "pnpm -r publish --access public"
   },
   "repository": {
     "type": "git",
