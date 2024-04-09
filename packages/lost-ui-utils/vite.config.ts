@@ -16,7 +16,7 @@ export default defineConfig({
     targets: [
       {
         src: resolve(__dirname, '../../README.md'),
-        dest: resolve(__dirname, ''),
+        dest: resolve(__dirname, './dist'),
       },
     ],
   })],
