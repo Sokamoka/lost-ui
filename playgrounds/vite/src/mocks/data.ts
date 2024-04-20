@@ -44,14 +44,14 @@ export const PAYMENT_DATA = [
   },
   {
     id: '5',
-    amount: 316,
+    amount: -30,
     status: 'success',
     name: 'Ken Adulo',
     email: 'ken99@yahoo.com',
   },
   {
     id: '6',
-    amount: 242,
+    amount: -40,
     status: 'success',
     name: 'Abe Awerto',
     email: 'Abe45@gmail.com',

@@ -15,7 +15,11 @@ export function sortBy<T>(data: T[], targets: SortOrders[], options: SortByOptio
       const aValue = a[target.target as keyof T] as string
       const bValue = b[target.target as keyof T] as string
 
-      comparison = collator.compare(aValue, bValue)
+      if (typeof aValue === 'number' && typeof bValue === 'number')
+        comparison = aValue < bValue ? -1 : 1
+      else
+        comparison = collator.compare(aValue, bValue)
+
       if (comparison !== 0)
         return target.direction === SortDirection.ASCEND ? comparison : -comparison
     }
