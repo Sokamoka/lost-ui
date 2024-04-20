@@ -7,7 +7,7 @@ export interface SortByOptions {
 
 export function sortBy<T>(data: T[], targets: SortOrders[], options: SortByOptions = {}): T[] {
   const { locale = 'en' } = options
-  const collator = new Intl.Collator(locale)
+  const collator = new Intl.Collator(locale, { numeric: true })
 
   return data.slice().sort((a: T, b: T) => {
     let comparison = 0
