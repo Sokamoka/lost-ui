@@ -3,9 +3,11 @@ import { ref } from 'vue'
 import { unrefElement } from '@vueuse/core'
 import { scrollTo } from '@lostui/utils'
 import { Button } from '@/components/ui/button'
+import Dialog from '@/components/Dialog.vue'
 
 const scrollTopContainer = ref(null)
 const scrollHorizontalContainer = ref(null)
+const modalContent = ref(null)
 
 function goTo() {
   scrollTo(document.querySelector('#document-top') as HTMLElement, { offset: -40, duration: 5000 })
@@ -14,6 +16,11 @@ function goTo() {
 function goToTop() {
   scrollTo(document.querySelector('#child-top') as HTMLElement, { offset: -20, rootElement: unrefElement(scrollTopContainer) })
 }
+
+function goToTopInModal() {
+  scrollTo((unrefElement(modalContent) || document.body).querySelector('#modal-top') as HTMLElement, { rootElement: unrefElement(modalContent) })
+}
+
 function goToTopStart() {
   scrollTo(document.querySelector('#h-first') as HTMLElement, { rootElement: unrefElement(scrollHorizontalContainer) })
 }
@@ -23,6 +30,33 @@ function goToTopStart() {
   <Button class="fixed bottom-2 right-2" @click="goTo">
     GO to Document top
   </Button>
+  <div class="fixed top-2 right-2">
+    <Dialog title="Edit Profile">
+      <template #trigger>
+        <Button variant="outline">
+          Edit Profile
+        </Button>
+      </template>
+
+      <template #content>
+        <div ref="modalContent" class="grid gap-4 py-4 overflow-y-auto px-6">
+          <div class="flex flex-col justify-between h-[300dvh]">
+            <p id="modal-top">
+              This is some placeholder content to show the scrolling behavior for modals. We use repeated line breaks to demonstrate how content can exceed minimum inner height, thereby showing inner scrolling. When content becomes longer than the predefined max-height of modal, content will be cropped and scrollable within the modal.
+            </p>
+
+            <p>This content should appear at the bottom after you scroll.</p>
+          </div>
+        </div>
+      </template>
+
+      <template #footer>
+        <Button type="button" @click="goToTopInModal">
+          Scroll to Top
+        </Button>
+      </template>
+    </Dialog>
+  </div>
   <div id="document-top" class="bg-indigo-200">
     Top
   </div>
