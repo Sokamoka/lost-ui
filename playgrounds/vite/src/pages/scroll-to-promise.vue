@@ -1,47 +1,44 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-import { useScrollToPromise } from '@lostui/utils'
+import { ref } from 'vue'
+import { delay, useScrollToPromise } from '@lostui/utils'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
+const currentItem = ref('item-0')
+
 const scrollTo = useScrollToPromise()
 
-async function goTo() {
-  await scrollTo('#second', 30)
-  await scrollTo('#first', 20)
-}
-
-onMounted(() => goTo())
-
 const accordionItems = [
-  { value: 'item-1', title: 'Is it accessible?', content: 'Yes. It adheres to the WAI-ARIA design pattern.' },
-  { value: 'item-2', title: 'Is it unstyled?', content: 'Yes. It\'s unstyled by default, giving you freedom over the look and feel.' },
-  { value: 'item-3', title: 'Can it be animated?', content: 'Yes! You can use the transition prop to configure the animation.' },
+  { value: 'item-0', title: 'Is it accessible?', content: 'Yes. It adheres to the WAI-ARIA design pattern.' },
+  { value: 'item-1', title: 'Is it unstyled?', content: 'Yes. It\'s unstyled by default, giving you freedom over the look and feel.' },
+  { value: 'item-2', title: 'Can it be animated?', content: 'Yes! You can use the transition prop to configure the animation.' },
 ]
+
+async function nextItem() {
+  const current: number = (Number(currentItem.value.replace(/\D/g, '')))
+  const next: number = (current + 1) % accordionItems.length
+  await scrollTo(`#item-${current}`)
+  currentItem.value = `item-${next}`
+  await delay(500)
+  await scrollTo(`#item-${next}`)
+}
 </script>
 
 <template>
-  <Button class="fixed top-2 left-2" @click="goTo">
+  <!-- <Button class="fixed top-2 left-2" @click="goTo">
     GO
-  </Button>
-  <Accordion type="single" class="w-full" collapsible :default-value="defaultValue">
-    <AccordionItem v-for="item in accordionItems" :key="item.value" :value="item.value">
+  </Button> -->
+  <Accordion v-model="currentItem" type="single" class="w-full" collapsible>
+    <AccordionItem v-for="item in accordionItems" :id="item.value" :key="item.value" :value="item.value">
       <AccordionTrigger>{{ item.title }}</AccordionTrigger>
       <AccordionContent>
-        {{ item.content }}
+        <div class="h-[800px] bg-slate-100">
+          {{ item.content }}
+        </div>
       </AccordionContent>
     </AccordionItem>
   </Accordion>
-  <div class="max-w-4xl p-5 mx-auto space-y-5">
-    <div id="first" class="h-screen bg-slate-200">
-      A
-    </div>
-    <div id="second" class="h-screen bg-slate-200">
-      B
-    </div>
-  </div>
+  <Button @click="nextItem">
+    Next
+  </Button>
 </template>
-
-<style scoped>
-
-</style>
