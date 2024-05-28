@@ -13,7 +13,7 @@ export function scrollTo(target: MaybeElement, options: ScrollToOptions = {}) {
   const _rootElement = rootElement || document.documentElement
 
   if (!target)
-    throw new Error('Need target')
+    throw new Error('Target element is undefined')
 
   const to = getCoords(target, _rootElement).top + offset
   const toHorizontal = getCoords(target, _rootElement).left + offset
