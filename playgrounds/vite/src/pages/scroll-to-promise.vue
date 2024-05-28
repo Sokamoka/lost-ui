@@ -25,9 +25,6 @@ async function nextItem() {
 </script>
 
 <template>
-  <!-- <Button class="fixed top-2 left-2" @click="goTo">
-    GO
-  </Button> -->
   <Accordion v-model="currentItem" type="single" class="w-full" collapsible>
     <AccordionItem v-for="item in accordionItems" :id="item.value" :key="item.value" :value="item.value">
       <AccordionTrigger>{{ item.title }}</AccordionTrigger>
