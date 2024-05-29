@@ -33,6 +33,8 @@ pnpm add @lostui/utils
 - [x] SortBy Intl.collator sorting
 - [x] nextFrame
 - [x] scrollTo
+- [x] delay
+- [x] animationEnd
 
 ## Composables
 

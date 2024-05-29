@@ -12,8 +12,8 @@ npm install @lostui/utils
 #pnpm
 pnpm add @lostui/utils
 ```
-
-## Composables
+## UI Utils
+### Composables
 
 - [x] useDataTable
 - [x] useFetchMore
@@ -21,13 +21,46 @@ pnpm add @lostui/utils
 - [x] usePagination
 - [x] useShowPassword
 - [x] useSort
+- [x] [useScrollToPromise](#useScrollToPromise)
 - [x] useValidation
 
-## Components
+### Components
 
 - [x] FetchMoreObserver
 
-## Utils
+### Utils
 
 - [x] SortBy Intl.collator sorting
-- [ ] nextFrame
+- [x] nextFrame
+- [x] scrollTo
+- [x] delay
+- [x] animationEnd
+
+## Composables
+
+### useScrollToPromise <a id="useScrollToPromise"></a>
+```js
+  import { useScrollToPromise } from '@lostui/utils'
+
+  const scrollTo = useScrollToPromise()
+  
+  async function goTo() {
+    await scrollTo('#item-1')
+    await scrollTo('#item-2')
+  }
+```
+
+## Components
+
+### FetchMoreObserver
+```js
+import { FetchMoreObserver } from '@lostui/utils/components';
+```
+```html
+<FetchMoreObserver
+  :options="{ rootMargin: '200px' }"
+  @intersect="fetchMore"
+>
+  <button @click="more">More</button>
+</FetchMoreObserver>
+```

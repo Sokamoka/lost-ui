@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { delay, useScrollToPromise } from '@lostui/utils'
+import { nextTick, ref } from 'vue'
+import { animationEnd, useScrollToPromise } from '@lostui/utils'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
-
-const currentItem = ref('item-0')
-
-const scrollTo = useScrollToPromise()
 
 const accordionItems = [
   { value: 'item-0', title: 'Is it accessible?', content: 'Yes. It adheres to the WAI-ARIA design pattern.' },
@@ -14,12 +10,19 @@ const accordionItems = [
   { value: 'item-2', title: 'Can it be animated?', content: 'Yes! You can use the transition prop to configure the animation.' },
 ]
 
+const currentItem = ref('item-0')
+
+const scrollTo = useScrollToPromise()
+
 async function nextItem() {
-  const current: number = (Number(currentItem.value.replace(/\D/g, '')))
+  const current: number = Number(currentItem.value?.replace(/\D/g, '') ?? 0)
   const next: number = (current + 1) % accordionItems.length
   await scrollTo(`#item-${current}`)
   currentItem.value = `item-${next}`
-  await delay(500)
+
+  await nextTick()
+  await animationEnd()
+
   await scrollTo(`#item-${next}`)
 }
 </script>
