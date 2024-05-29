@@ -27,5 +27,7 @@ declare module 'vue-router/auto-routes' {
     '/list-fetch-more': RouteRecordInfo<'/list-fetch-more', '/list-fetch-more', Record<never, never>, Record<never, never>>,
     '/list-pagination': RouteRecordInfo<'/list-pagination', '/list-pagination', Record<never, never>, Record<never, never>>,
     '/list-sort': RouteRecordInfo<'/list-sort', '/list-sort', Record<never, never>, Record<never, never>>,
+    '/scroll-to': RouteRecordInfo<'/scroll-to', '/scroll-to', Record<never, never>, Record<never, never>>,
+    '/scroll-to-promise': RouteRecordInfo<'/scroll-to-promise', '/scroll-to-promise', Record<never, never>, Record<never, never>>,
   }
 }
