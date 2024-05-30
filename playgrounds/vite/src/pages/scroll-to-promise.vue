@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { nextTick, ref } from 'vue'
-import { animationEnd, useScrollToPromise } from '@lostui/utils'
+import { ref } from 'vue'
+import { delay, useScrollToPromise } from '@lostui/utils'
 import { Button } from '@/components/ui/button'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
@@ -20,8 +20,7 @@ async function nextItem() {
   await scrollTo(`#item-${current}`)
   currentItem.value = `item-${next}`
 
-  await nextTick()
-  await animationEnd()
+  await delay(250)
 
   await scrollTo(`#item-${next}`)
 }

@@ -19,9 +19,9 @@ pnpm add @lostui/utils
 - [x] useFetchMore
 - [x] useLazyLoadingState
 - [x] usePagination
+- [x] [useScrollToPromise](#useScrollToPromise)
 - [x] useShowPassword
 - [x] useSort
-- [x] [useScrollToPromise](#useScrollToPromise)
 - [x] useValidation
 
 ### Components
@@ -39,6 +39,8 @@ pnpm add @lostui/utils
 ## Composables
 
 ### useScrollToPromise <a id="useScrollToPromise"></a>
+ScrollToPromise to help with complex scrolls. 
+
 ```js
   import { useScrollToPromise } from '@lostui/utils'
 
@@ -49,6 +51,7 @@ pnpm add @lostui/utils
     await scrollTo('#item-2')
   }
 ```
+Example: [Playground](https://github.com/Sokamoka/lost-ui/blob/main/playgrounds/vite/src/pages/scroll-to-promise.vue)
 
 ## Components
 
